@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const heroImages = [
   'makise-kurisu-2.webp', 'atam-1.webp', 'kintaro-2.webp',
@@ -31,6 +31,63 @@ const roadmap = [
 const ticker = 'RADICAL TRANSPARENCY  •  INTENTIONAL MINIMALISM  •  ARCHITECTURAL INTEGRITY  •  FIRST PRINCIPLES THINKING  •  PERFORMANCE WITHOUT COMPROMISE  •  SCALABLE VISION  •  '
 
 function Arrow() { return <span className="arrow">↗</span> }
+
+function ParticleField() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const context = canvas.getContext('2d')
+    if (!context) return
+    let width = 0
+    let height = 0
+    let frame = 0
+    const points = Array.from({ length: 72 }, (_, index) => ({
+      x: (index * 137.5) % 1,
+      y: (index * 83.7) % 1,
+      phase: index * 0.8,
+      speed: 0.00025 + (index % 5) * 0.00006,
+    }))
+    const resize = () => {
+      width = canvas.width = window.innerWidth * window.devicePixelRatio
+      height = canvas.height = window.innerHeight * window.devicePixelRatio
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      context.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0)
+    }
+    const draw = (time: number) => {
+      const pixelRatio = window.devicePixelRatio || 1
+      context.clearRect(0, 0, width / pixelRatio, height / pixelRatio)
+      const active = points.map((point) => ({
+        x: point.x * window.innerWidth + Math.sin(time * point.speed + point.phase) * 15,
+        y: point.y * window.innerHeight + Math.cos(time * point.speed * .8 + point.phase) * 12,
+      }))
+      active.forEach((point, index) => {
+        context.fillStyle = 'rgba(255,255,255,.5)'
+        context.beginPath()
+        context.arc(point.x, point.y, index % 4 === 0 ? 1.2 : .7, 0, Math.PI * 2)
+        context.fill()
+        active.slice(index + 1).forEach((other) => {
+          const distance = Math.hypot(point.x - other.x, point.y - other.y)
+          if (distance < 115) {
+            context.strokeStyle = `rgba(255,255,255,${(1 - distance / 115) * .07})`
+            context.lineWidth = .5
+            context.beginPath()
+            context.moveTo(point.x, point.y)
+            context.lineTo(other.x, other.y)
+            context.stroke()
+          }
+        })
+      })
+      frame = requestAnimationFrame(draw)
+    }
+    resize()
+    window.addEventListener('resize', resize)
+    frame = requestAnimationFrame(draw)
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('resize', resize) }
+  }, [])
+  return <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />
+}
 
 export default function Home() {
   const [light, setLight] = useState(false)
@@ -79,6 +136,9 @@ export default function Home() {
       </header>
 
       <section id="home" className="hero section-grid">
+        <ParticleField />
+        <div className="menu-mark" aria-hidden="true"><span /><span /><span /><span /></div>
+        <div className="hero-scroll-mark" aria-hidden="true"><i />SCROLL</div>
         <div className="hero-copy hero-fade">
           <div className="hero-kicker">SCROLL <span>↓</span></div>
           <h1>KINTARO<br /><em>PORTFOLIO</em></h1>
@@ -86,7 +146,8 @@ export default function Home() {
           <div className="hero-buttons"><button className="pill primary" onClick={() => scrollTo('contact')}>CONTACT ME <Arrow /></button><button className="text-button" onClick={() => scrollTo('projects')}>◌ &nbsp; EXPLORE PROJECTS</button></div>
         </div>
         <div className="hero-collage" aria-label="Portrait gallery">
-          {heroImages.map((image, i) => <div className={`portrait portrait-${i + 1}`} style={{ transform: `translateY(${Math.sin((scrollY / 280) + i) * 22}px)` }} key={image}><img src={`/assets/hero-slider/${image}`} alt="Portrait" /></div>)}
+          <div className="hero-column hero-column-a">{[...heroImages, ...heroImages].map((image, i) => <div className="portrait" key={`a-${image}-${i}`}><img src={`/assets/hero-slider/${image}`} alt="Portrait" /></div>)}</div>
+          <div className="hero-column hero-column-b">{[...heroImages.slice(2), ...heroImages, ...heroImages.slice(0, 2)].map((image, i) => <div className="portrait" key={`b-${image}-${i}`}><img src={`/assets/hero-slider/${image}`} alt="Portrait" /></div>)}</div>
         </div>
       </section>
 
