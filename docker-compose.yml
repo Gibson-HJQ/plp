@@ -1,0 +1,12 @@
+services:
+  xkintaro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xkintaro-clone
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "${HOST_PORT:-3002}:3000"
+    restart: unless-stopped
