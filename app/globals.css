@@ -50,6 +50,68 @@
 /* Even exposure falloff along all four edges, like a moving film frame. */
 .hero-emblems .portrait:after{content:'';position:absolute;z-index:2;inset:0;pointer-events:none;background:linear-gradient(to right,rgba(9,9,9,.16) 0,rgba(9,9,9,.05) 7%,transparent 16%,transparent 84%,rgba(9,9,9,.05) 93%,rgba(9,9,9,.16) 100%),linear-gradient(to bottom,rgba(9,9,9,.16) 0,rgba(9,9,9,.05) 7%,transparent 16%,transparent 84%,rgba(9,9,9,.05) 93%,rgba(9,9,9,.16) 100%)}
 
-.leaf-canvas{position:fixed;z-index:18;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:difference;opacity:.78;transition:opacity .32s linear}
+.leaf-canvas{position:absolute;z-index:4;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:difference;opacity:.78}
+
+/* Keep scroll-linked motion on compositor-friendly opacity and transforms. */
+.page-progress{transform:scaleX(0);transition:none;will-change:transform}
+.nav{--nav-height:88px;--nav-pad:3.2vw;--nav-gap:30px;--nav-scale:1;transition:background .3s ease,box-shadow .3s ease}
+.nav.scrolled{background:color-mix(in srgb,var(--bg) 96%,transparent);backdrop-filter:none;box-shadow:0 1px 0 var(--line)}
+.hero-transition{--hero-shift:0%;--hero-scale:1;--about-shift:100%;--about-progress:0;--about-exit:0}
+.hero-page{filter:none;will-change:transform}
+.hero-about{filter:none;will-change:transform;box-shadow:0 -18px 48px rgba(0,0,0,.46)}
+.scroll-fade[data-scroll-fade]{filter:none;translate:none;transform:translate3d(0,var(--section-lift,22px),0);transition:opacity .12s linear,transform .16s ease-out;will-change:opacity,transform}
+.scroll-fade[data-scroll-fade="title"],.scroll-fade[data-scroll-fade="project-title"]{transition:opacity .18s linear,transform .22s ease-out}
+.pointer-glow{mix-blend-mode:normal}
+.leaf-canvas{mix-blend-mode:normal;contain:strict}
+.stack,.roadmap,.contact{content-visibility:auto;contain-intrinsic-size:auto 1000px}
+
+/* About is choreographed as a lightweight, ordered scroll sequence. */
+.hero-about{align-items:center;column-gap:clamp(48px,7vw,116px)}
+.hero-about .about-title-stage>small{position:relative;top:28px;display:block;margin-bottom:22px;font-size:18px;letter-spacing:.22em}
+.hero-about .about-title-stage h2{position:relative;top:28px;font-size:clamp(58px,6.1vw,94px);letter-spacing:0}
+.about-stage-item{opacity:0;transform:translate3d(0,42px,0);transform-origin:center center;pointer-events:none;transition:opacity .46s cubic-bezier(.22,1,.36,1),transform .62s cubic-bezier(.22,1,.36,1);transition-delay:0s;will-change:opacity,transform}
+.hero-transition[data-about-phase="after"] .about-stage-item{opacity:0;transform:translate3d(0,-28px,0);pointer-events:none}
+.hero-transition[data-about-phase="visible"] .about-stage-item{opacity:1;transform:translate3d(0,0,0);pointer-events:auto}
+.hero-transition[data-about-phase="visible"] .about-title-stage{transition-delay:0s}
+.hero-transition[data-about-phase="visible"] .about-headline-stage{transition-delay:.08s}
+.hero-transition[data-about-phase="visible"] .about-icon-stage{transition-delay:.16s}
+.hero-transition[data-about-phase="visible"] .about-body-line-1{transition-delay:.23s}
+.hero-transition[data-about-phase="visible"] .about-body-line-2{transition-delay:.29s}
+.hero-transition[data-about-phase="visible"] .about-body-line-3{transition-delay:.35s}
+.hero-transition[data-about-phase="visible"] .about-button-stage{transition-delay:.35s,.35s,0s,0s}
+.about-icon-stage{width:min(31.5vw,435px);margin:76px auto 0 0}
+.about-writing-image{display:block;width:100%;height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9;transition:filter .35s ease}
+.site.light .about-writing-image{filter:brightness(0)}
+.hero-about .about-copy{align-self:center;max-width:650px}
+.hero-about .about-copy h3{margin:0 0 27px;font-size:clamp(29px,2.65vw,44px);line-height:1.2;letter-spacing:0;font-weight:700;text-wrap:balance}
+.about-body-stage{max-width:640px}
+.hero-about .about-body-stage p{max-width:none;margin:0;color:color-mix(in srgb,var(--fg) 66%,var(--muted));font-size:clamp(13px,.94vw,15px);line-height:1.86;letter-spacing:.07em;text-align:justify}
+.hero-about .about-body-stage strong{color:var(--fg);font-weight:800}
+.hero-about .about-body-stage p+p{margin-top:16px}
+.hero-about .about-button-stage{position:relative;margin-top:26px;padding:0 2px 11px;border:0;font-size:12px;letter-spacing:.08em;transition:opacity .46s cubic-bezier(.22,1,.36,1),transform .62s cubic-bezier(.22,1,.36,1),color .25s ease,translate .25s ease}
+.hero-about .about-button-stage:after{content:'';position:absolute;right:0;bottom:0;left:0;height:1px;background:currentColor;transform:scaleX(.58);transform-origin:left center;transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+.hero-about .about-button-stage .arrow{display:inline-block;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.hero-about .about-button-stage:hover,.hero-about .about-button-stage:focus-visible{color:var(--fg);translate:0 -2px;outline:none}
+.hero-about .about-button-stage:hover:after,.hero-about .about-button-stage:focus-visible:after{transform:scaleX(1)}
+.hero-about .about-button-stage:hover .arrow,.hero-about .about-button-stage:focus-visible .arrow{transform:translate3d(4px,-4px,0)}
+.hero-about .about-expanded{margin-top:14px;font-size:13px;letter-spacing:.06em}
 
 @media(max-width:800px){.pointer-glow{display:none}.journey-button:before{display:none}.journey-button:hover,.journey-button:focus-visible{background:var(--fg);border-color:transparent;color:var(--bg)}.journey-button:hover .journey-button-content,.journey-button:focus-visible .journey-button-content{mix-blend-mode:normal;color:inherit}}
+
+@media(max-width:800px){.hero-about{display:block}.hero-transition[data-about-phase] .about-stage-item{opacity:1;transform:none;pointer-events:auto;transition:none}.hero-about .about-title-stage>small{font-size:14px}.hero-about .about-title-stage h2{font-size:60px}.about-icon-stage{width:min(90vw,520px);margin:38px auto 52px}.hero-about .about-copy h3{font-size:31px}.hero-about .about-body-stage p{font-size:14px;line-height:1.85}.hero-about .about-button-stage{font-size:12px}}
+
+/* Participating schools and literary clubs. */
+.club-section{min-height:920px;padding-top:110px;padding-bottom:130px}
+.club-heading small{font-size:13px;letter-spacing:.24em}
+.club-heading h2{max-width:820px;font-size:clamp(44px,5.4vw,76px);letter-spacing:0}
+.club-list{list-style:none;width:min(100%,900px);margin:62px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:42px;justify-content:start}
+.club-item{display:grid;grid-template-columns:22px 44px minmax(0,1fr);align-items:center;gap:11px;min-height:70px;padding:12px 0;border-top:1px solid var(--line)}
+.club-number{color:var(--muted);font-size:9px;letter-spacing:.16em}
+.club-emblem{display:grid;place-items:center;width:44px;height:44px;overflow:hidden;border:1px solid var(--line);border-radius:50%;background:#f4f4f0;color:#0e0e0e;font-family:Georgia,serif;font-size:18px;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease}
+.club-emblem img{display:block;width:100%;height:100%;padding:4px;object-fit:contain;filter:grayscale(1) contrast(1.16)}
+.club-name{min-width:0;color:color-mix(in srgb,var(--fg) 76%,var(--muted));font-size:clamp(11px,.88vw,13px);line-height:1.45;letter-spacing:.045em;text-align:left}
+.club-item:hover .club-emblem{transform:scale(1.06);opacity:1}
+.club-item:hover .club-name{color:var(--fg)}
+.club-item:nth-child(2){transition-delay:.04s}.club-item:nth-child(3){transition-delay:.08s}.club-item:nth-child(4){transition-delay:.12s}.club-item:nth-child(5){transition-delay:.16s}.club-item:nth-child(6){transition-delay:.2s}.club-item:nth-child(7){transition-delay:.24s}.club-item:nth-child(8){transition-delay:.28s}.club-item:nth-child(9){transition-delay:.32s}.club-item:nth-child(10){transition-delay:.36s}
+
+@media(max-width:800px){.club-section{padding-top:95px;padding-bottom:120px}.club-heading small{font-size:11px}.club-heading h2{font-size:clamp(40px,11vw,56px);line-height:.96}.club-list{grid-template-columns:1fr;margin-top:48px}.club-item{grid-template-columns:22px 44px minmax(0,1fr);min-height:70px;gap:11px}.club-item:last-child{border-bottom:1px solid var(--line)}.club-emblem{width:44px;height:44px}.club-name{font-size:12px}}
