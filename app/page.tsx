@@ -6,7 +6,6 @@ const heroColumns = [
   [
     { file: 'yundiao.webp', name: '云雕文学社社徽' },
     { file: 'xingzhixiang.webp', name: '星之巷文学社社徽' },
-    { file: 'songyun.webp', name: '松云文学社社徽' },
     { file: 'qinghewan.webp', name: '青鹤湾文学社社徽' },
     { file: 'huqing.webp', name: '虎青新闻社社徽' },
   ],
@@ -21,7 +20,6 @@ const heroColumns = [
 
 const clubs = [
   { name: '东莞中学云雕文学社', logo: 'yundiao.webp' },
-  { name: '东莞中学松山湖学校松云文学社', logo: 'songyun.webp' },
   { name: '东莞高级中学青草地文学社', logo: 'qingcaodi.webp' },
   { name: '东莞市虎门外语学校青年通讯社', logo: 'huqing.webp' },
   { name: '东莞市第六高级中学翰香文学社', logo: 'hanxiang.webp' },
@@ -32,6 +30,18 @@ const clubs = [
   { name: '东莞市北辰高级中学星之巷文学社', logo: 'xingzhixiang.webp' },
 ]
 
+const orderSchools = [
+  { name: '东莞中学', url: '' },
+  { name: '东莞高级中学', url: '' },
+  { name: '东莞市虎门外语学校', url: '' },
+  { name: '东莞市第六高级中学', url: '' },
+  { name: '东莞市常平中学', url: '' },
+  { name: '东莞市粤华学校', url: '' },
+  { name: '东莞市济川中学', url: '' },
+  { name: '东莞市南城开心实验学校', url: '' },
+  { name: '东莞市北辰高级中学', url: '' },
+]
+
 const projects = [
   { type: 'Media Tool', year: '2026', title: 'Aether Media', image: '/assets/projects/aether-media.jpg' },
   { type: 'Library', year: '2026', title: 'Aether JS', image: '/assets/projects/aether-js.jpg' },
@@ -39,11 +49,11 @@ const projects = [
 ]
 
 const roadmap = [
-  { year: '2022', text: 'I first got introduced to software development in high school. I learned the fundamentals and logic of programming using C# in an object-oriented programming class.', tags: ['C#'] },
-  { year: '2023', text: 'I started developing static and dynamic websites by learning HTML, CSS, and ASP.NET. During this period, I also learned how to use databases in my projects.', tags: ['HTML', 'CSS', 'ASP.NET', 'MySQL'] },
-  { year: '2024', text: 'It was my last year of high school. I significantly improved my UI development skills with CSS and continued working with ASP.NET at my internship.', tags: ['HTML', 'CSS', 'ASP.NET', 'MySQL'] },
-  { year: '2025', text: 'After high school, I turned to modern technologies like React, Node.js, Tailwind CSS, and MongoDB. During this period, I developed many websites and applications. Additionally, I started writing various tools in Python for my personal use.', tags: ['React', 'Node.js', 'Tailwind', 'MongoDB'] },
-  { year: '2026', text: 'I started working as an intern at PostAjans, where I focused mainly on Laravel. In addition, I develop web projects using Next.js in my free time and build various personal projects utilizing technologies like Tauri and FFmpeg.', tags: ['Laravel', 'Next.js', 'PostgreSQL'] },
+  { year: '2019–2022', text: '尝试、号召、启程。', tags: [] },
+  { year: '2023', theme: '鸿雁锦书', period: '9月—12月', quote: '“云中谁寄锦书来，雁字回时，月满西楼” ——李清照《一剪梅》', text: '覆盖全市48所普通高中，累计交换信件量达22万封，参与人数约6–7万，相关推文阅读量达10万+。', tags: [] },
+  { year: '2024', theme: '闲潭梦落', period: '10月—12月', quote: '“昨夜闲潭梦落花，可怜春半不还家” ——张若虚《春江花月夜》', text: '吸引全市51所普高及中职学子参与。活动公众号推文累计阅读30万次，用户16万，信件数量达28万封，正成为东莞“文化强市”重要力量，构建高中生校园“时代记忆”。', tags: [] },
+  { year: '2025', theme: '焉问鱼沉', period: '10月—12月', quote: '“渐行渐远渐无书，水阔鱼沉何处问” ——欧阳修《木兰花》', text: '覆盖全市51所高中、中职院校；首次联动东莞展览馆开设“漂流瓶驿站”，并增设“我眼中的城市文明”专项书信征文活动。', tags: [] },
+  { year: '2026', theme: '香笺承意', period: '10月—12月', quote: '“香笺一纸，写尽回纹机上意” ——苏轼《减字木兰花·得书》', text: '拟开展书信撰写、校际交换及收尾工作，并联动东莞展览馆设置“漂流瓶驿站”，举办“我眼中的校园文化”专项书信征文与“我眼中的城市文明”明信片（信封）设计比赛。', tags: [] },
 ]
 
 const ticker = 'LETTERS ACROSS DISTANCE  •  WORDS WITH INTENTION  •  AUTUMN CORRESPONDENCE  •  CONNECTION BEYOND CAMPUSES  •  RELAY BORN OF PASSION  •  ROMANCE BELONGING TO STUDENTS  •  '
@@ -60,8 +70,12 @@ function LetteredPhrase({ text, className = '' }: { text: string; className?: st
 
 export default function Home() {
   const [light, setLight] = useState(false)
-  const [lang, setLang] = useState('EN')
+  const [season, setSeason] = useState<'autumn' | 'winter'>('autumn')
   const [expanded, setExpanded] = useState(false)
+  const [orderOpen, setOrderOpen] = useState(false)
+  const [schoolMenuOpen, setSchoolMenuOpen] = useState(false)
+  const [selectedSchool, setSelectedSchool] = useState('')
+  const [orderNotice, setOrderNotice] = useState('')
   const pageProgressRef = useRef<HTMLDivElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
@@ -70,6 +84,41 @@ export default function Home() {
   const projectsRef = useRef<HTMLElement>(null)
   const projectTrackRef = useRef<HTMLDivElement>(null)
   const heroTransitionRef = useRef<HTMLDivElement>(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const contactPanelRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!orderOpen) return
+    const previousOverflow = document.body.style.overflow
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      if (schoolMenuOpen) setSchoolMenuOpen(false)
+      else setOrderOpen(false)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [orderOpen, schoolMenuOpen])
+
+  const openOrderDialog = () => {
+    setSchoolMenuOpen(false)
+    setSelectedSchool('')
+    setOrderNotice('')
+    setOrderOpen(true)
+  }
+
+  const submitOrder = () => {
+    const school = orderSchools.find((item) => item.name === selectedSchool)
+    if (!school) return
+    if (!school.url) {
+      setOrderNotice('该学校的订购链接待开放')
+      return
+    }
+    window.location.assign(school.url)
+  }
 
   useEffect(() => {
     const fadeElements = Array.from(document.querySelectorAll<HTMLElement>('[data-scroll-fade]'))
@@ -107,6 +156,9 @@ export default function Home() {
     let scrollFrame = 0
     let displayedHeroProgress = 0
     let displayedExitProgress = 0
+    let displayedTimelineTop = 0
+    let displayedTimelineBottom = 0
+    let displayedContactShift = 54
     let aboutPhase = ''
     let lastFrameTime = performance.now()
     const updateScroll = (frameTime = performance.now()) => {
@@ -134,7 +186,14 @@ export default function Home() {
         displayedExitProgress += (targetExitProgress - displayedExitProgress) * blend
         const exitProgress = displayedExitProgress
         heroTransition.style.setProperty('--about-exit', `${exitProgress}`)
-        const nextAboutPhase = targetExitProgress >= .72 ? 'after' : targetProgress >= .34 ? 'visible' : 'before'
+        const aboutFocusTargets = Array.from(heroTransition.querySelectorAll<HTMLElement>('.hero-about .section-label, .hero-about .about-copy'))
+        const aboutRects = aboutFocusTargets.map((element) => element.getBoundingClientRect())
+        aboutFocusTargets.forEach((element, index) => {
+          const rect = aboutRects[index]
+          element.classList.toggle('is-focus-visible', rect.top < window.innerHeight && rect.bottom > 0)
+        })
+        const aboutIntersectsViewport = aboutRects.some((rect) => rect.top < window.innerHeight && rect.bottom > 0)
+        const nextAboutPhase = aboutIntersectsViewport ? 'visible' : aboutRects.length > 0 && aboutRects.every((rect) => rect.bottom <= 0) ? 'after' : 'before'
         if (nextAboutPhase !== aboutPhase) {
           aboutPhase = nextAboutPhase
           heroTransition.dataset.aboutPhase = nextAboutPhase
@@ -156,6 +215,42 @@ export default function Home() {
         const progress = Math.min(1, Math.max(0, (scrollY - projectSection.offsetTop) / distance))
         const horizontalDistance = Math.max(0, projectTrack.scrollWidth - window.innerWidth)
         projectTrack.style.transform = `translate3d(${-progress * horizontalDistance}px, 0, 0)`
+      }
+      const timeline = timelineRef.current
+      if (timeline) {
+        const rect = timeline.getBoundingClientRect()
+        const height = Math.max(1, rect.height)
+        const targetVisibleTop = Math.min(1, Math.max(0, -rect.top / height))
+        const targetVisibleBottom = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / height))
+        const timelineBlend = 1 - Math.exp(-elapsed / 240)
+        displayedTimelineTop += (targetVisibleTop - displayedTimelineTop) * timelineBlend
+        displayedTimelineBottom += (targetVisibleBottom - displayedTimelineBottom) * timelineBlend
+        const visibleTop = displayedTimelineTop
+        const visibleBottom = displayedTimelineBottom
+        const edgeFade = Math.min(.07, 90 / height)
+        let clearTop = Math.min(1, visibleTop + edgeFade)
+        let clearBottom = Math.max(0, visibleBottom - edgeFade)
+        if (clearTop > clearBottom) clearTop = clearBottom = (visibleTop + visibleBottom) / 2
+        timeline.style.setProperty('--timeline-visible-top', `${(visibleTop * 100).toFixed(3)}%`)
+        timeline.style.setProperty('--timeline-clear-top', `${(clearTop * 100).toFixed(3)}%`)
+        timeline.style.setProperty('--timeline-clear-bottom', `${(clearBottom * 100).toFixed(3)}%`)
+        timeline.style.setProperty('--timeline-visible-bottom', `${(visibleBottom * 100).toFixed(3)}%`)
+        if ((Math.abs(targetVisibleTop - displayedTimelineTop) > .0004 || Math.abs(targetVisibleBottom - displayedTimelineBottom) > .0004) && !scrollFrame) {
+          scrollFrame = window.requestAnimationFrame(updateScroll)
+        }
+      }
+      const contactPanel = contactPanelRef.current
+      if (contactPanel) {
+        const rect = contactPanel.getBoundingClientRect()
+        const layoutTop = rect.top + scrollY - displayedContactShift
+        const contactProgress = Math.min(1, Math.max(0, (scrollY + window.innerHeight - layoutTop) / (window.innerHeight * .72)))
+        const targetContactShift = 54 - contactProgress * 90
+        const contactBlend = 1 - Math.exp(-elapsed / 170)
+        displayedContactShift += (targetContactShift - displayedContactShift) * contactBlend
+        contactPanel.style.setProperty('--contact-panel-shift', `${displayedContactShift.toFixed(2)}px`)
+        if (Math.abs(targetContactShift - displayedContactShift) > .05 && !scrollFrame) {
+          scrollFrame = window.requestAnimationFrame(updateScroll)
+        }
       }
       updateScrollFades()
     }
@@ -184,6 +279,10 @@ export default function Home() {
       if (entry.isIntersecting) entry.target.classList.add('visible')
     }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
     document.querySelectorAll('.reveal, .reveal-line').forEach((element) => observer.observe(element))
+    const focusObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      entry.target.classList.toggle('is-focus-visible', entry.isIntersecting)
+    }), { threshold: 0.01 })
+    document.querySelectorAll('.focus-reveal-item').forEach((element) => focusObserver.observe(element))
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
@@ -191,6 +290,7 @@ export default function Home() {
       window.cancelAnimationFrame(scrollFrame)
       window.cancelAnimationFrame(pointerFrame)
       observer.disconnect()
+      focusObserver.disconnect()
     }
   }, [])
 
@@ -249,6 +349,27 @@ export default function Home() {
       context.translate(leaf.x, leaf.y)
       context.rotate(leaf.angle)
       const length = leaf.radius
+      if (season === 'winter') {
+        const snowColor = light ? [14, 14, 14] : [244, 244, 244]
+        context.strokeStyle = `rgba(${snowColor[0]},${snowColor[1]},${snowColor[2]},${Math.min(.72, leaf.opacity + .16)})`
+        context.lineWidth = Math.max(.65, length * .075)
+        context.lineCap = 'round'
+        for (let arm = 0; arm < 6; arm += 1) {
+          context.save()
+          context.rotate(arm * Math.PI / 3)
+          context.beginPath()
+          context.moveTo(0, 0)
+          context.lineTo(0, -length)
+          context.moveTo(0, -length * .58)
+          context.lineTo(-length * .24, -length * .76)
+          context.moveTo(0, -length * .58)
+          context.lineTo(length * .24, -length * .76)
+          context.stroke()
+          context.restore()
+        }
+        context.restore()
+        return
+      }
       const leafColor = light ? [168, 48, 42] : [212, 168, 75]
       context.fillStyle = `rgba(${leafColor[0]},${leafColor[1]},${leafColor[2]},${leaf.opacity * .38})`
       context.strokeStyle = `rgba(${leafColor[0]},${leafColor[1]},${leafColor[2]},${Math.min(.7, leaf.opacity + .14)})`
@@ -331,9 +452,13 @@ export default function Home() {
       window.cancelAnimationFrame(frame)
       visibilityObserver.disconnect()
     }
-  }, [light])
+  }, [light, season])
 
   const scrollTo = (id: string) => {
+    if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
     if (id === 'about' && heroTransitionRef.current) {
       const section = heroTransitionRef.current
       window.scrollTo({ top: section.offsetTop + section.offsetHeight - window.innerHeight, behavior: 'smooth' })
@@ -352,7 +477,7 @@ export default function Home() {
           {[['home', 'home'], ['about', 'about'], ['stack', 'club'], ['projects', 'design'], ['roadmap', 'roadmap'], ['contact', 'contact']].map(([target, label]) => <button key={target} onClick={() => scrollTo(target)}>{label}</button>)}
         </nav>
         <div className="nav-actions">
-          <button aria-label="Switch Language" onClick={() => setLang(lang === 'EN' ? 'TR' : 'EN')}>{lang}</button>
+          <button className="season-toggle" aria-label={season === 'autumn' ? '切换为冬季模式' : '切换为秋季模式'} title={season === 'autumn' ? '当前：秋季，点击切换冬季' : '当前：冬季，点击切换秋季'} onClick={() => setSeason(season === 'autumn' ? 'winter' : 'autumn')}><span aria-hidden="true">{season === 'autumn' ? '🍁' : '❄'}</span></button>
           <button aria-label="Toggle theme" className="theme-toggle" onClick={() => setLight(!light)}>{light ? '☼' : '◐'}</button>
         </div>
       </header>
@@ -375,7 +500,7 @@ export default function Home() {
                 <p className="about-body-line-3 about-stage-item"><strong>那些难能面诉的话，都借由书信来抵达。</strong></p>
               </div>
               <button className="underline-button about-button-stage about-stage-item" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>Read Full <Arrow /></button>
-              {expanded && <p className="expanded about-expanded">那些信纸在不同校园之间辗转，也让素未谋面的少年，在同一座城市里彼此抵达。</p>}
+              {expanded && <p className="expanded about-expanded">人无法两次踏入同一条河流，却能在一张泛黄的纸页里，与年少的自己阔别重逢。</p>}
             </div>
           </section>
 
@@ -386,11 +511,11 @@ export default function Home() {
                 <div className="hero-kicker" aria-hidden="true"><span className="envelope-mark" /></div>
                 <h1><span lang="zh-CN">漂流瓶</span><br /><em><LetteredPhrase text="DRIFTPOST" className="driftpost-lettering" /></em></h1>
                 <p className="hero-manifesto"><span className="manifesto-line manifesto-year" lang="zh-CN"><LetteredPhrase text="2026" /><b><LetteredPhrase text="香笺承意" /></b></span><span className="manifesto-line"><LetteredPhrase text="We may stumble, but we always arrive." /></span><span className="manifesto-line"><LetteredPhrase text="And you, like us, will eventually reach" /><b><LetteredPhrase text="the other side." /></b></span></p>
-                <div className="hero-buttons"><button className="pill primary journey-button" onClick={() => scrollTo('contact')} onPointerMove={(event) => { const rect = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty('--journey-x', `${event.clientX - rect.left}px`); event.currentTarget.style.setProperty('--journey-y', `${event.clientY - rect.top}px`) }}><span className="journey-button-content"><LetteredPhrase text="了解这趟旅程" className="cta-lettering" /> <Arrow /></span></button><button className="text-button order-button" onClick={() => scrollTo('projects')}><span className="explore-orbit">◌</span><LetteredPhrase text="信封订购" className="cta-lettering" /></button></div>
+                <div className="hero-buttons"><button className="pill primary journey-button" onClick={() => scrollTo('about')} onPointerMove={(event) => { const rect = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty('--journey-x', `${event.clientX - rect.left}px`); event.currentTarget.style.setProperty('--journey-y', `${event.clientY - rect.top}px`) }}><span className="journey-button-content"><LetteredPhrase text="了解这趟旅程" className="cta-lettering" /> <Arrow /></span></button><button className="text-button order-button" onClick={openOrderDialog}><span className="explore-orbit">◌</span><LetteredPhrase text="信封订购" className="cta-lettering" /></button></div>
               </div>
               <div className="hero-collage hero-emblems" aria-label="文学社社徽展示">
                 {heroColumns.map((images, columnIndex) => <div className={`hero-column hero-column-${columnIndex + 1}`} key={columnIndex}><div className="hero-column-track">{[0, 1].map((copy) => <div className="hero-column-set" aria-hidden={copy === 1} key={copy}>{images.map((image) => <div className="portrait" key={`${copy}-${image.file}`}><img src={`/assets/hero-emblems/${image.file}`} alt={copy === 0 ? image.name : ''} /></div>)}</div>)}</div></div>)}
-                <div className="hero-motion-rail" aria-hidden="true"><span>SCROLL</span><i><b /></i><small>01 / 10</small></div>
+                <div className="hero-motion-rail" aria-hidden="true"><span>SCROLL</span><i><b /></i><small>01 / 09</small></div>
               </div>
             </section>
           </div>
@@ -400,9 +525,9 @@ export default function Home() {
       <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
 
       <section id="stack" className="stack club-section content-section">
-        <div className="section-heading club-heading reveal scroll-fade" data-scroll-fade="title"><small>[002]</small><h2>SCHOOL &amp; CLUB</h2></div>
-        <ul className="club-list scroll-fade" data-scroll-fade>
-          {clubs.map((club, index) => <li className="club-item reveal" key={club.name}>
+        <div className="section-heading club-heading focus-reveal-item"><small>[002]</small><h2>SCHOOL &amp; CLUB</h2></div>
+        <ul className="club-list focus-reveal-item">
+          {clubs.map((club, index) => <li className="club-item" key={club.name}>
             <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
             <span className="club-emblem"><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
             <span className="club-name">{club.name}</span>
@@ -415,9 +540,9 @@ export default function Home() {
       <section id="projects" className="projects" ref={projectsRef}>
         <div className="projects-sticky">
           <div className="project-track" ref={projectTrackRef}>
-            <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>PROJECTS</h2><p>A collection of <em>experiments,</em><br /><em>products,</em> and <em>digital<br />artifacts</em> forged in the <b>void.</b></p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
+            <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
             {projects.map((project) => <article className="project-card scroll-fade" data-scroll-fade="horizontal" key={project.title}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>VIEW PROJECT</span><Arrow /></div></div><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
-            <div className="project-end scroll-fade" data-scroll-fade="horizontal" aria-label="End of projects">END</div>
+            <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品">MORE <Arrow /></button></div>
           </div>
         </div>
       </section>
@@ -425,15 +550,37 @@ export default function Home() {
       <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
 
       <section id="roadmap" className="roadmap content-section">
-        <div className="center-heading reveal scroll-fade" data-scroll-fade><small>[004]</small><h2>ROADMAP</h2><p>A roadmap where I share the experiences I&apos;ve gained throughout my<br />software journey and the technologies I&apos;ve learned.</p></div>
-        <div className="timeline reveal-line scroll-fade" data-scroll-fade>{roadmap.map((item, i) => <article className="timeline-item reveal" key={item.year}><div className="timeline-dot" /><div className="timeline-card"><small>0{i + 1}</small><h3>{item.year}</h3><p>{item.text}</p><div className="tags">{item.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article>)}</div>
+        <div className="center-heading roadmap-heading focus-reveal-item"><small>[004]</small><h2>ROADMAP</h2><p>时间只会带走从未被认真对待过的事物。</p></div>
+        <div className="timeline" ref={timelineRef}>{roadmap.map((item, i) => <article className="timeline-item" key={item.year}><div className="timeline-dot" /><div className="timeline-card focus-reveal-item"><small>0{i + 1}</small><h3>{item.year}</h3>{item.theme && <div className="timeline-event-meta"><strong>{item.theme}</strong><span>{item.period}</span></div>}{item.quote && <blockquote>{item.quote}</blockquote>}<p>{item.text}</p>{item.tags.length > 0 && <div className="tags">{item.tags.map(tag => <span key={tag}>{tag}</span>)}</div>}</div></article>)}</div>
+        <div className="roadmap-outro" aria-hidden="true"><span>ROAD MAP</span></div>
       </section>
 
-      <section id="contact" className="contact content-section">
-        <div className="center-heading reveal scroll-fade" data-scroll-fade><small>[005]</small><h2>CONTACT</h2><p>Whether we start fresh to bring a project to life or take an existing system<br />further.</p></div>
-        <div className="contact-links reveal scroll-fade" data-scroll-fade><a href="mailto:mustafw42@gmail.com"><span>SEND AN EMAIL</span><b>mustafw42@gmail.com</b><Arrow /></a><a href="tel:Notaddedyet"><span>DIRECT LINE</span><b>Not added yet.</b><Arrow /></a></div>
-        <footer className="reveal scroll-fade" data-scroll-fade><span>© 2026 DRIFTPOST. All rights reserved.</span><div><a href="https://github.com/xkintaro">GitHub</a><a href="https://discord.gg/NSQk27Zdkv">Discord</a><a href="https://instagram.com/xkintaro">Instagram</a><a href="https://www.linkedin.com/in/mustafa-tasal/">Linkedin</a></div></footer>
+      <section id="contact" className="contact-panel" ref={contactPanelRef}>
+        <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
+        <div className="contact content-section">
+          <div className="center-heading reveal scroll-fade" data-scroll-fade><small>[006]</small><h2>CONTACT</h2><p>任何想法，联系我们</p></div>
+          <div className="contact-links reveal scroll-fade" data-scroll-fade><a href="mailto:driftpost@163.com"><span>SEND AN EMAIL</span><b>driftpost@163.com</b><Arrow /></a><a href="tel:Notaddedyet"><span>DIRECT LINE</span><b>Not added yet.</b><Arrow /></a></div>
+          <footer className="reveal scroll-fade" data-scroll-fade><span>© 2026 DRIFTPOST. All rights reserved.</span></footer>
+        </div>
       </section>
+
+      {orderOpen && <div className="order-dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) { setSchoolMenuOpen(false); setOrderOpen(false) } }}>
+        <section className="order-dialog" role="dialog" aria-modal="true" aria-labelledby="order-dialog-title">
+          <button className="order-dialog-close" aria-label="关闭订购窗口" onClick={() => { setSchoolMenuOpen(false); setOrderOpen(false) }}>×</button>
+          <small>DRIFTPOST ORDER</small>
+          <h2 id="order-dialog-title">信封订购</h2>
+          <p>选择你所在的学校，我们会带你前往对应的订购页面。</p>
+          <span className="order-school-label" id="order-school-label">所在学校</span>
+          <div className="order-school-picker">
+            <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
+            {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
+              {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+            </div>}
+          </div>
+          <button className="order-dialog-submit" disabled={!selectedSchool} onClick={submitOrder}>立即订购 <Arrow /></button>
+          <p className="order-dialog-notice" role="status">{orderNotice}</p>
+        </section>
+      </div>}
     </main>
   )
 }
