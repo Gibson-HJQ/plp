@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { gallerySchools } from './gallery/gallery-data'
 
 const heroColumns = [
   [
@@ -30,21 +31,23 @@ const clubs = [
   { name: '东莞市北辰高级中学星之巷文学社', logo: 'xingzhixiang.webp' },
 ]
 
-const orderSchools = [
-  { name: '东莞中学', url: '' },
-  { name: '东莞高级中学', url: '' },
-  { name: '东莞市虎门外语学校', url: '' },
-  { name: '东莞市第六高级中学', url: '' },
-  { name: '东莞市常平中学', url: '' },
-  { name: '东莞市粤华学校', url: '' },
+type OrderSchool = { name: string; url: string; qr?: string }
+
+const orderSchools: OrderSchool[] = [
+  { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.png' },
+  { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
+  { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },
+  { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
+  { name: '东莞市常平中学', url: 'https://xtfvzrr0.jsjform.com/f/F1wGDU', qr: '/assets/order-qr/qinghewan.png' },
+  { name: '东莞市粤华学校', url: 'https://xtfvzrr0.jsjform.com/f/ukG9pM', qr: '/assets/order-qr/liuyue.png' },
   { name: '东莞市济川中学', url: '' },
   { name: '东莞市南城开心实验学校', url: '' },
   { name: '东莞市北辰高级中学', url: '' },
 ]
 
 const projects = [
-  { type: 'Media Tool', year: '2026', title: 'Aether Media', image: '/assets/projects/aether-media.jpg' },
-  { type: 'Library', year: '2026', title: 'Aether JS', image: '/assets/projects/aether-js.jpg' },
+  { type: '信封设计', year: '2026', title: '星之巷', image: '/assets/projects/xingzhixiang-poster.webp' },
+  { type: '信封设计', year: '2026', title: '青草地', image: '/assets/projects/qingcaodi-poster.webp' },
   { type: 'Web Application', year: '2025', title: 'File Manager', image: '/assets/projects/file-manager.jpg' },
 ]
 
@@ -76,6 +79,10 @@ export default function Home() {
   const [schoolMenuOpen, setSchoolMenuOpen] = useState(false)
   const [selectedSchool, setSelectedSchool] = useState('')
   const [orderNotice, setOrderNotice] = useState('')
+  const [orderQrSchool, setOrderQrSchool] = useState('')
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [gallerySchoolMenuOpen, setGallerySchoolMenuOpen] = useState(false)
+  const [selectedGallerySchool, setSelectedGallerySchool] = useState('')
   const pageProgressRef = useRef<HTMLDivElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
@@ -88,11 +95,23 @@ export default function Home() {
   const contactPanelRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (!orderOpen) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('gallery') !== '1') return
+    setGallerySchoolMenuOpen(false)
+    setSelectedGallerySchool('')
+    setGalleryOpen(true)
+    window.history.replaceState(null, '', `${window.location.pathname}#projects`)
+  }, [])
+
+  useEffect(() => {
+    if (!orderOpen && !galleryOpen) return
     const previousOverflow = document.body.style.overflow
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
-      if (schoolMenuOpen) setSchoolMenuOpen(false)
+      if (galleryOpen) {
+        if (gallerySchoolMenuOpen) setGallerySchoolMenuOpen(false)
+        else setGalleryOpen(false)
+      } else if (schoolMenuOpen) setSchoolMenuOpen(false)
       else setOrderOpen(false)
     }
     document.body.style.overflow = 'hidden'
@@ -101,23 +120,41 @@ export default function Home() {
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', closeOnEscape)
     }
-  }, [orderOpen, schoolMenuOpen])
+  }, [orderOpen, galleryOpen, schoolMenuOpen, gallerySchoolMenuOpen])
 
   const openOrderDialog = () => {
     setSchoolMenuOpen(false)
     setSelectedSchool('')
     setOrderNotice('')
+    setOrderQrSchool('')
     setOrderOpen(true)
   }
 
   const submitOrder = () => {
     const school = orderSchools.find((item) => item.name === selectedSchool)
     if (!school) return
+    if (school.qr) {
+      setOrderQrSchool(school.name)
+      setSchoolMenuOpen(false)
+      return
+    }
     if (!school.url) {
       setOrderNotice('该学校的订购链接待开放')
       return
     }
     window.location.assign(school.url)
+  }
+
+  const openGalleryDialog = () => {
+    setGallerySchoolMenuOpen(false)
+    setSelectedGallerySchool('')
+    setGalleryOpen(true)
+  }
+
+  const openSelectedGallery = () => {
+    const school = gallerySchools.find((item) => item.name === selectedGallerySchool)
+    if (!school) return
+    window.location.assign(`/gallery/${school.slug}`)
   }
 
   useEffect(() => {
@@ -474,7 +511,7 @@ export default function Home() {
       <header className="nav" ref={navRef}>
         <button className="brand" onClick={() => scrollTo('home')}>DRIFTPOST</button>
         <nav>
-          {[['home', 'home'], ['about', 'about'], ['stack', 'club'], ['projects', 'design'], ['roadmap', 'roadmap'], ['contact', 'contact']].map(([target, label]) => <button key={target} onClick={() => scrollTo(target)}>{label}</button>)}
+          {[['about', 'about'], ['stack', 'club'], ['projects', 'design'], ['roadmap', 'roadmap'], ['contact', 'contact']].map(([target, label]) => <button key={target} onClick={() => scrollTo(target)}>{label}</button>)}
         </nav>
         <div className="nav-actions">
           <button className="season-toggle" aria-label={season === 'autumn' ? '切换为冬季模式' : '切换为秋季模式'} title={season === 'autumn' ? '当前：秋季，点击切换冬季' : '当前：冬季，点击切换秋季'} onClick={() => setSeason(season === 'autumn' ? 'winter' : 'autumn')}><span aria-hidden="true">{season === 'autumn' ? '🍁' : '❄'}</span></button>
@@ -542,7 +579,7 @@ export default function Home() {
           <div className="project-track" ref={projectTrackRef}>
             <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
             {projects.map((project) => <article className="project-card scroll-fade" data-scroll-fade="horizontal" key={project.title}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>VIEW PROJECT</span><Arrow /></div></div><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
-            <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品">MORE <Arrow /></button></div>
+            <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品" onClick={openGalleryDialog}>MORE <Arrow /></button></div>
           </div>
         </div>
       </section>
@@ -559,7 +596,7 @@ export default function Home() {
         <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
         <div className="contact content-section">
           <div className="center-heading reveal scroll-fade" data-scroll-fade><small>[006]</small><h2>CONTACT</h2><p>任何想法，联系我们</p></div>
-          <div className="contact-links reveal scroll-fade" data-scroll-fade><a href="mailto:driftpost@163.com"><span>SEND AN EMAIL</span><b>driftpost@163.com</b><Arrow /></a><a href="tel:Notaddedyet"><span>DIRECT LINE</span><b>Not added yet.</b><Arrow /></a></div>
+          <div className="contact-links reveal scroll-fade" data-scroll-fade><a href="mailto:driftpost@163.com"><span>SEND AN EMAIL</span><b>driftpost@163.com</b><Arrow /></a><div className="contact-channel"><span>微信公众号</span><b>莞字文鸣</b><span className="arrow contact-channel-spacer" aria-hidden="true">↗</span></div></div>
           <footer className="reveal scroll-fade" data-scroll-fade><span>© 2026 DRIFTPOST. All rights reserved.</span></footer>
         </div>
       </section>
@@ -569,16 +606,39 @@ export default function Home() {
           <button className="order-dialog-close" aria-label="关闭订购窗口" onClick={() => { setSchoolMenuOpen(false); setOrderOpen(false) }}>×</button>
           <small>DRIFTPOST ORDER</small>
           <h2 id="order-dialog-title">信封订购</h2>
-          <p>选择你所在的学校，我们会带你前往对应的订购页面。</p>
-          <span className="order-school-label" id="order-school-label">所在学校</span>
+          {orderQrSchool ? <div className="order-qr-view">
+            <p>{orderQrSchool}<br />请使用微信扫描二维码进入订购表单。</p>
+            <div className="order-qr-frame"><img src={orderSchools.find((school) => school.name === orderQrSchool)?.qr} alt={`${orderQrSchool}信封订购二维码`} /></div>
+            <button className="order-dialog-submit" onClick={() => setOrderQrSchool('')}>返回学校选择</button>
+          </div> : <>
+            <p>选择你所在的学校，我们会带你前往对应的订购页面。</p>
+            <span className="order-school-label" id="order-school-label">所在学校</span>
+            <div className="order-school-picker">
+              <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
+              {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
+                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(''); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+              </div>}
+            </div>
+            <button className="order-dialog-submit" disabled={!selectedSchool} onClick={submitOrder}>{orderSchools.find((school) => school.name === selectedSchool)?.qr ? '显示订购二维码' : '立即订购'} <Arrow /></button>
+            <p className="order-dialog-notice" role="status">{orderNotice}</p>
+          </>}
+        </section>
+      </div>}
+
+      {galleryOpen && <div className="order-dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) { setGallerySchoolMenuOpen(false); setGalleryOpen(false) } }}>
+        <section className="order-dialog gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-dialog-title">
+          <button className="order-dialog-close" aria-label="关闭画廊选择窗口" onClick={() => { setGallerySchoolMenuOpen(false); setGalleryOpen(false) }}>×</button>
+          <small>DRIFTPOST GALLERY</small>
+          <h2 id="gallery-dialog-title">选择学校画廊</h2>
+          <p>选择一所学校，进入对应文学社的文创作品画廊。</p>
+          <span className="order-school-label" id="gallery-school-label">学校</span>
           <div className="order-school-picker">
-            <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
-            {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
-              {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+            <button className="order-school-trigger" id="gallery-school-trigger" aria-labelledby="gallery-school-label gallery-school-trigger" aria-haspopup="listbox" aria-expanded={gallerySchoolMenuOpen} onClick={() => setGallerySchoolMenuOpen(!gallerySchoolMenuOpen)} autoFocus><span>{selectedGallerySchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
+            {gallerySchoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="gallery-school-label">
+              {gallerySchools.map((school) => <button className={selectedGallerySchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedGallerySchool === school.name} onClick={() => { setSelectedGallerySchool(school.name); setGallerySchoolMenuOpen(false) }} key={school.slug}>{school.name}<span aria-hidden="true">{selectedGallerySchool === school.name ? '✓' : ''}</span></button>)}
             </div>}
           </div>
-          <button className="order-dialog-submit" disabled={!selectedSchool} onClick={submitOrder}>立即订购 <Arrow /></button>
-          <p className="order-dialog-notice" role="status">{orderNotice}</p>
+          <button className="order-dialog-submit" disabled={!selectedGallerySchool} onClick={openSelectedGallery}>进入画廊 <Arrow /></button>
         </section>
       </div>}
     </main>
