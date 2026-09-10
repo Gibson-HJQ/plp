@@ -614,7 +614,7 @@ export default function Home() {
           </section>
           <section className="club-group club-group-community focus-reveal-item" aria-labelledby="activity-clubs-title">
             <div className="club-group-heading"><div><small>ACTIVITY PARTICIPANTS</small><h3 id="activity-clubs-title">其他活动参与学校</h3></div><span>{String(activityOnlyClubs.length).padStart(2, '0')} / {String(clubs.length).padStart(2, '0')}</span></div>
-            <p className="club-group-note">同样参与漂流瓶活动，目前未上线网站，因此名单不展示社徽。</p>
+            <p className="club-group-note">同样参与漂流瓶活动，目前未上线网站。</p>
             <ul className="club-list club-list-community">
               {activityOnlyClubs.map((club, index) => <li className="club-item club-item-plain" key={club.school}>
                 <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
