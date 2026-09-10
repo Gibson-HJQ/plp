@@ -19,17 +19,55 @@ const heroColumns = [
   ],
 ]
 
-const clubs = [
-  { name: '东莞中学云雕文学社', logo: 'yundiao.webp' },
-  { name: '东莞高级中学青草地文学社', logo: 'qingcaodi.webp' },
-  { name: '东莞市虎门外语学校青年通讯社', logo: 'huqing.webp' },
-  { name: '东莞市第六高级中学翰香文学社', logo: 'hanxiang.webp' },
-  { name: '东莞市常平中学青鹤湾文学社', logo: 'qinghewan.webp' },
-  { name: '东莞市粤华学校流月文学社', logo: 'liuyue.webp' },
-  { name: '东莞市济川中学沐博文学社', logo: 'mubo.webp' },
-  { name: '东莞市南城开心实验学校52Herz文学社', logo: 'school-52.webp' },
-  { name: '东莞市北辰高级中学星之巷文学社', logo: 'xingzhixiang.webp' },
+type Club = { school: string; club: string; logo?: string }
+
+const clubs: Club[] = [
+  { school: '东莞市海逸外国语学校', club: '海逸文学社（待确认）' },
+  { school: '东莞市万江中学', club: '江风文学社' },
+  { school: '东莞理工学校', club: '竹韵诗词社' },
+  { school: '东莞市石龙中学', club: '乳雁文学社' },
+  { school: '东莞市第七高级中学', club: '秋枫文学社' },
+  { school: '东莞市南城开心实验学校', club: '52Herz文学社', logo: 'school-52.webp' },
+  { school: '东莞市厚街中学', club: '沙砾文学社' },
+  { school: '东莞市第十三高级中学', club: '墨笙文学社' },
+  { school: '东莞市实验中学', club: '守望者文学社' },
+  { school: '东莞市虎门中学', club: '春蕾文学社' },
+  { school: '东莞市电子科技学校（中职代表）', club: '浪潮文学社' },
+  { school: '东莞外国语学校', club: '候鸟文学社' },
+  { school: '东莞市长安中学', club: '莲峰文学社' },
+  { school: '东莞市东方明珠学校', club: '长庚文学社' },
+  { school: '东莞市第八高级中学', club: '山风文学社' },
+  { school: '东莞市东华高级中学（东城校区）', club: '旗峰文学社' },
+  { school: '东莞市翰林高级学校', club: '兰襟文学社' },
+  { school: '东莞市济川中学', club: '沐博文学社', logo: 'mubo.webp' },
+  { school: '东莞市第六高级中学', club: '翰香文学社', logo: 'hanxiang.webp' },
+  { school: '东莞中学松山湖学校', club: '松云文学社' },
+  { school: '东莞市虎门外语学校', club: '青年通讯社', logo: 'huqing.webp' },
+  { school: '东莞中学', club: '云雕文学社', logo: 'yundiao.webp' },
+  { school: '东莞市粤华学校', club: '流月文学社', logo: 'liuyue.webp' },
+  { school: '东莞市第二高级中学', club: '旗峰文学社' },
+  { school: '东莞市东华松山湖高级中学', club: '辞故文学社' },
+  { school: '东莞市海德双语学校', club: '拾遗文学社' },
+  { school: '东莞市第五高级中学', club: '汉苑文学社' },
+  { school: '东莞市翰林实验学校', club: '伴路文学社' },
+  { school: '东莞市常平中学', club: '青鹤湾文学社', logo: 'qinghewan.webp' },
+  { school: '东莞市第四高级中学', club: '芜春文学社' },
+  { school: '东莞市第一中学', club: '繁蕊文学社' },
+  { school: '东莞市北辰高级中学', club: '星之巷文学社', logo: 'xingzhixiang.webp' },
+  { school: '东莞市东华高级中学（生态园校区）', club: '燕岭文学社' },
+  { school: '东莞市光明中学', club: '景行文学社' },
+  { school: '东莞高级中学', club: '青草地文学社', logo: 'qingcaodi.webp' },
+  { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社' },
+  { school: '东莞市海德实验学校', club: '海燕文学社' },
+  { school: '东莞市电子商贸学校', club: '朝霞文学社' },
+  { school: '东莞市弘林高级中学', club: '南亦书舍文学社' },
+  { school: '东莞市商业学校（东城校区）', club: '听雨文学社' },
+  { school: '东莞松山湖未来学校', club: '未星文学社' },
+  { school: '东莞市东晖实验学校', club: '青葵文学社' },
 ]
+
+const siteClubs = clubs.filter((club) => club.logo)
+const activityOnlyClubs = clubs.filter((club) => !club.logo)
 
 type OrderSchool = { name: string; url: string; qr?: string }
 
@@ -562,14 +600,29 @@ export default function Home() {
       <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
 
       <section id="stack" className="stack club-section content-section">
-        <div className="section-heading club-heading focus-reveal-item"><small>[002]</small><h2>SCHOOL &amp; CLUB</h2></div>
-        <ul className="club-list focus-reveal-item">
-          {clubs.map((club, index) => <li className="club-item" key={club.name}>
-            <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
-            <span className="club-emblem"><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
-            <span className="club-name">{club.name}</span>
-          </li>)}
-        </ul>
+        <div className="section-heading club-heading focus-reveal-item"><small>[002]</small><h2>SCHOOLS &amp; CLUBS</h2><p>本届活动共有 {clubs.length} 所学校与校区参与，其中 {siteClubs.length} 个社团已上线网站。</p></div>
+        <div className="club-groups">
+          <section className="club-group club-group-featured focus-reveal-item" aria-labelledby="site-clubs-title">
+            <div className="club-group-heading"><div><small>ONLINE CLUBS</small><h3 id="site-clubs-title">已上线网站的社团</h3></div><span>{String(siteClubs.length).padStart(2, '0')} / {String(clubs.length).padStart(2, '0')}</span></div>
+            <ul className="club-list club-list-featured">
+              {siteClubs.map((club, index) => <li className="club-item" key={club.school}>
+                <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
+                <span className="club-emblem"><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
+                <span className="club-name"><strong>{club.school}</strong><small>{club.club}</small></span>
+              </li>)}
+            </ul>
+          </section>
+          <section className="club-group club-group-community focus-reveal-item" aria-labelledby="activity-clubs-title">
+            <div className="club-group-heading"><div><small>ACTIVITY PARTICIPANTS</small><h3 id="activity-clubs-title">其他活动参与学校</h3></div><span>{String(activityOnlyClubs.length).padStart(2, '0')} / {String(clubs.length).padStart(2, '0')}</span></div>
+            <p className="club-group-note">同样参与漂流瓶活动，目前未上线网站，因此名单不展示社徽。</p>
+            <ul className="club-list club-list-community">
+              {activityOnlyClubs.map((club, index) => <li className="club-item club-item-plain" key={club.school}>
+                <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
+                <span className="club-name"><strong>{club.school}</strong><small>{club.club}</small></span>
+              </li>)}
+            </ul>
+          </section>
+        </div>
       </section>
 
       <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
