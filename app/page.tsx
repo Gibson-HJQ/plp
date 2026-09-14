@@ -5,6 +5,7 @@ import { gallerySchools } from './gallery/gallery-data'
 
 const heroColumns = [
   [
+    { file: 'jiangfeng.png', name: '江风文学社社徽' },
     { file: 'yundiao.webp', name: '云雕文学社社徽' },
     { file: 'xingzhixiang.webp', name: '星之巷文学社社徽' },
     { file: 'qinghewan.webp', name: '青鹤湾文学社社徽' },
@@ -22,8 +23,8 @@ const heroColumns = [
 type Club = { school: string; club: string; logo?: string }
 
 const clubs: Club[] = [
+  { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
   { school: '东莞市海逸外国语学校', club: '海逸文学社（待确认）' },
-  { school: '东莞市万江中学', club: '江风文学社' },
   { school: '东莞理工学校', club: '竹韵诗词社' },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
   { school: '东莞市第七高级中学', club: '秋枫文学社' },
@@ -72,6 +73,7 @@ const activityOnlyClubs = clubs.filter((club) => !club.logo)
 type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
+  { name: '东莞市万江中学', url: '' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.png' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },
@@ -590,7 +592,7 @@ export default function Home() {
               </div>
               <div className="hero-collage hero-emblems" aria-label="文学社社徽展示">
                 {heroColumns.map((images, columnIndex) => <div className={`hero-column hero-column-${columnIndex + 1}`} key={columnIndex}><div className="hero-column-track">{[0, 1].map((copy) => <div className="hero-column-set" aria-hidden={copy === 1} key={copy}>{images.map((image) => <div className="portrait" key={`${copy}-${image.file}`}><img src={`/assets/hero-emblems/${image.file}`} alt={copy === 0 ? image.name : ''} /></div>)}</div>)}</div></div>)}
-                <div className="hero-motion-rail" aria-hidden="true"><span>SCROLL</span><i><b /></i><small>01 / 09</small></div>
+                <div className="hero-motion-rail" aria-hidden="true"><span>SCROLL</span><i><b /></i><small>01 / {String(siteClubs.length).padStart(2, '0')}</small></div>
               </div>
             </section>
           </div>
