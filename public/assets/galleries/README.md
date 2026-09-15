@@ -6,6 +6,7 @@ Add a UTF-8 `note.txt` to the same folder to replace the inscription at the bott
 
 - `dongguan`: 东莞中学
 - `wanjiang`: 东莞市万江中学
+- `no7-senior`: 东莞市第七高级中学
 - `dongguan-senior`: 东莞高级中学
 - `humen-foreign-languages`: 东莞市虎门外语学校
 - `no6-senior`: 东莞市第六高级中学

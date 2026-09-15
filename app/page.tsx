@@ -12,6 +12,7 @@ const heroColumns = [
     { file: 'huqing.webp', name: '虎青新闻社社徽' },
   ],
   [
+    { file: 'qiufeng.png', name: '秋枫文学社社徽' },
     { file: 'school-52.webp', name: '52赫兹文学社社徽' },
     { file: 'hanxiang.webp', name: '翰香文学社社徽' },
     { file: 'liuyue.webp', name: '流月文学社社徽' },
@@ -24,10 +25,10 @@ type Club = { school: string; club: string; logo?: string }
 
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
+  { school: '东莞市第七高级中学', club: '秋枫文学社', logo: 'qiufeng.png' },
   { school: '东莞市海逸外国语学校', club: '海逸文学社（待确认）' },
   { school: '东莞理工学校', club: '竹韵诗词社' },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
-  { school: '东莞市第七高级中学', club: '秋枫文学社' },
   { school: '东莞市南城开心实验学校', club: '52Herz文学社', logo: 'school-52.webp' },
   { school: '东莞市厚街中学', club: '沙砾文学社' },
   { school: '东莞市第十三高级中学', club: '墨笙文学社' },
@@ -74,6 +75,7 @@ type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
   { name: '东莞市万江中学', url: '' },
+  { name: '东莞市第七高级中学', url: '' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.png' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },

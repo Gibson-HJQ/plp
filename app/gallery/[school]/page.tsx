@@ -29,9 +29,19 @@ export default function SchoolGallery({ params }: GalleryPageProps) {
   if (!school) notFound()
 
   const galleryDirectory = path.join(process.cwd(), 'public', 'assets', 'galleries', school.slug)
-  const images = fs.existsSync(galleryDirectory)
+  const allImages = fs.existsSync(galleryDirectory)
     ? fs.readdirSync(galleryDirectory).filter((file) => imagePattern.test(file)).sort((a, b) => a.localeCompare(b, 'zh-CN'))
     : []
+  const isNo7 = school.slug === 'no7-senior'
+  const isYuehua = school.slug === 'yuehua'
+  const isWanjiang = school.slug === 'wanjiang'
+  const images = isNo7 || isYuehua || isWanjiang ? allImages.filter((file) => /^\d{2}-/.test(file)) : allImages
+  const wallImages = isNo7 ? allImages.filter((file) => /^wall-\d{2}-/.test(file)) : []
+  const postcards = isNo7 ? allImages.filter((file) => /^postcard-\d{2}-/.test(file)) : []
+  const characters = isNo7
+    ? ['character-01.jpg', 'character-02-white.png', 'character-03-white.png'].filter((file) => allImages.includes(file))
+    : []
+  const featureImage = (isYuehua || isWanjiang) && allImages.includes('character-05.png') ? 'character-05.png' : undefined
   const notePath = path.join(galleryDirectory, 'note.txt')
   const note = fs.existsSync(notePath)
     ? fs.readFileSync(notePath, 'utf8').trim()
@@ -44,7 +54,7 @@ export default function SchoolGallery({ params }: GalleryPageProps) {
         <Link className="gallery-back" href="/en?gallery=1#projects"><span aria-hidden="true">←</span> 返回画廊选择</Link>
       </header>
 
-      <SchoolGalleryExperience schoolName={school.name} clubName={school.club} schoolSlug={school.slug} images={images} note={note} />
+      <SchoolGalleryExperience schoolName={school.name} clubName={school.club} schoolSlug={school.slug} images={images} wallImages={wallImages} postcards={postcards} characters={characters} featureImage={featureImage} note={note} />
 
       <footer className="gallery-footer"><span>DRIFTPOST SCHOOL ARCHIVE</span><Link href="/en">BACK TO HOME ↗</Link></footer>
     </main>
