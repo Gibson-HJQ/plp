@@ -340,7 +340,15 @@ export default function Home() {
     let pointerFrame = 0
     let pointerX = -100
     let pointerY = -100
+    // Touch has no hover: a finger dragging across the screen fires a stream of pointermove
+    // events, which used to give the leaves a huge, screen-wide repulsion. Only fine,
+    // hovering pointers (a mouse) drive the pointer effects.
+    const finePointer = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(hover: hover) and (pointer: fine)')
+      : null
     const onPointerMove = (event: PointerEvent) => {
+      if (finePointer && !finePointer.matches) return
+      if (event.pointerType && event.pointerType !== 'mouse') return
       pointerX = event.clientX
       pointerY = event.clientY
       pointerPositionRef.current.x = pointerX
@@ -351,10 +359,19 @@ export default function Home() {
         pointerFrame = 0
       })
     }
+    // A touch that ends leaves the last position behind; park it off-screen so nothing
+    // keeps reacting to a finger that is no longer there.
+    const onPointerEnd = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse') return
+      pointerPositionRef.current.x = -1000
+      pointerPositionRef.current.y = -1000
+    }
     updateScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
     window.addEventListener('pointermove', onPointerMove, { passive: true })
+    window.addEventListener('pointerup', onPointerEnd, { passive: true })
+    window.addEventListener('pointercancel', onPointerEnd, { passive: true })
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) entry.target.classList.add('visible')
     }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
@@ -491,7 +508,11 @@ export default function Home() {
       context.restore()
     }
 
+    let previousFrame = 0
     const animate = (time: number) => {
+      // normalise the simulation to 60fps so a slow frame cannot inject a huge push
+      const step = previousFrame ? Math.min(3, Math.max(0.25, (time - previousFrame) / 16.667)) : 1
+      previousFrame = time
       context.clearRect(0, 0, width, height)
       const pointer = pointerPositionRef.current
       leaves.forEach((leaf) => {
@@ -500,14 +521,20 @@ export default function Home() {
         const distance = Math.hypot(dx, dy)
         if (distance > 0 && distance < 132) {
           const force = (1 - distance / 132) * 1.28
-          leaf.pushX += dx / distance * force
-          leaf.pushY += dy / distance * force
+          leaf.pushX += dx / distance * force * step
+          leaf.pushY += dy / distance * force * step
+        }
+        // the push is bounded, so a fast pointer can never fling a leaf across the screen
+        const pushLength = Math.hypot(leaf.pushX, leaf.pushY)
+        if (pushLength > 6) {
+          leaf.pushX = leaf.pushX / pushLength * 6
+          leaf.pushY = leaf.pushY / pushLength * 6
         }
         leaf.pushX *= 0.955
         leaf.pushY *= 0.955
-        leaf.x += Math.sin(time * 0.00032 + leaf.phase) * leaf.drift + leaf.pushX
-        leaf.y += leaf.speed + leaf.pushY
-        leaf.angle += leaf.spin + Math.sin(time * 0.00024 + leaf.phase) * 0.002
+        leaf.x += (Math.sin(time * 0.00032 + leaf.phase) * leaf.drift + leaf.pushX) * step
+        leaf.y += (leaf.speed + leaf.pushY) * step
+        leaf.angle += (leaf.spin + Math.sin(time * 0.00024 + leaf.phase) * 0.002) * step
         if (leaf.y > height + 24 || leaf.x < -36 || leaf.x > width + 36) Object.assign(leaf, makeLeaf(false))
         drawLeaf(leaf)
       })

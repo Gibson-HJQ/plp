@@ -55,9 +55,9 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
   return <div className={`gallery-experience${hasGalleryLamp ? (lightsOn ? ' is-lit' : ' is-dim') : ''}`}>
     {hasGalleryLamp && !lightsOn && <span className="lamp-hint" aria-hidden="true">
       <span className="lamp-hint-text">点击</span>
-      <svg className="lamp-hint-line" viewBox="0 0 205 70" fill="none" focusable="false" aria-hidden="true">
-        <path d="M4 8 C 36 -10, 148 20, 199 56" />
-        <path d="M208 64 L 194 58 M208 64 L 200 46" />
+      <svg className="lamp-hint-line" viewBox="0 0 140 58" fill="none" focusable="false" aria-hidden="true">
+        <path d="M4 7 C 28 -3, 100 16, 133 44" />
+        <path d="M139 51 L 128 46 M139 51 L 133 36" />
       </svg>
     </span>}
     <section className="gallery-hero">
