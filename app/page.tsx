@@ -341,25 +341,16 @@ export default function Home() {
     let pointerX = -100
     let pointerY = -100
     // A finger dragging across the screen used to give the leaves a huge, screen-wide
-    // repulsion. Any device that reports touch capability (or a coarse primary pointer) is
-    // treated as touch-first and never drives the leaf repulsion — this covers iOS Safari,
-    // which can report an unexpected pointerType for touches. A desktop with a mouse still
-    // gets the interactive falling leaves.
-    const coarsePointerQuery = typeof window.matchMedia === 'function'
-      ? window.matchMedia('(any-pointer: coarse)')
-      : null
-    const coarsePointer = coarsePointerQuery ? coarsePointerQuery.matches : false
-    const touchFirst = (navigator.maxTouchPoints || 0) > 0 || coarsePointer
-    // Temporary diagnostic: helps confirm on a real device which guard value applies.
-    console.info('[driftpost] leaf guard', {
-      maxTouchPoints: navigator.maxTouchPoints,
-      coarsePointer,
-      touchFirst,
-      pointerTypeSupport: 'PointerEvent' in window,
-      ua: navigator.userAgent,
-    })
+    // repulsion. Device-type detection (maxTouchPoints / hover / pointer) proved unreliable
+    // inside mobile in-app browsers, so the guard now reads the event itself: any move made
+    // while a button or finger is held down simply never reaches the leaves. A mouse moving
+    // without a press (buttons === 0) still drives them.
+    const parkPointer = () => {
+      pointerPositionRef.current.x = -1000
+      pointerPositionRef.current.y = -1000
+    }
     const onPointerMove = (event: PointerEvent) => {
-      if (touchFirst) return
+      if (event.buttons !== 0) { parkPointer(); return }
       if (event.pointerType && event.pointerType !== 'mouse') return
       pointerX = event.clientX
       pointerY = event.clientY
@@ -371,19 +362,23 @@ export default function Home() {
         pointerFrame = 0
       })
     }
-    // A touch that ends leaves the last position behind; park it off-screen so nothing
+    // Whenever a press ends (or is cancelled) the pointer reference is parked, so nothing
     // keeps reacting to a finger that is no longer there.
-    const onPointerEnd = (event: PointerEvent) => {
-      if (event.pointerType === 'mouse') return
-      pointerPositionRef.current.x = -1000
-      pointerPositionRef.current.y = -1000
-    }
+    const onPointerEnd = () => parkPointer()
+    const onPointerDown = () => parkPointer()
     updateScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
     window.addEventListener('pointermove', onPointerMove, { passive: true })
+    window.addEventListener('pointerdown', onPointerDown, { passive: true })
     window.addEventListener('pointerup', onPointerEnd, { passive: true })
     window.addEventListener('pointercancel', onPointerEnd, { passive: true })
+    // Belt and braces: some in-app browsers (WeChat / WKWebView) do not always dispatch
+    // pointer events for touch, so a touch directly parks the pointer too.
+    window.addEventListener('touchstart', onPointerDown, { passive: true })
+    window.addEventListener('touchmove', onPointerDown, { passive: true })
+    window.addEventListener('touchend', onPointerEnd, { passive: true })
+    window.addEventListener('touchcancel', onPointerEnd, { passive: true })
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) entry.target.classList.add('visible')
     }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
@@ -396,8 +391,13 @@ export default function Home() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
       window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('pointerup', onPointerEnd)
       window.removeEventListener('pointercancel', onPointerEnd)
+      window.removeEventListener('touchstart', onPointerDown)
+      window.removeEventListener('touchmove', onPointerDown)
+      window.removeEventListener('touchend', onPointerEnd)
+      window.removeEventListener('touchcancel', onPointerEnd)
       window.cancelAnimationFrame(scrollFrame)
       window.cancelAnimationFrame(pointerFrame)
       observer.disconnect()
