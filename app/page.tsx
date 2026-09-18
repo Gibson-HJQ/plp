@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { gallerySchools } from './gallery/gallery-data'
 
 const heroColumns = [
@@ -88,8 +88,10 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市商业学校（东城校区）', url: '' },
 ]
 
-const projects = [
-  { type: '信封设计', year: '2026', title: '听雨', image: '/assets/projects/tingyu-poster.jpg', cardClass: 'project-card--tingyu' },
+type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
+
+const projects: Project[] = [
+  { type: '信封设计', year: '2026', title: '听雨', image: '/assets/projects/tingyu-poster.jpg', cardClass: 'project-card--tingyu', gallery: 'tingyu' },
   { type: '信封设计', year: '2026', title: '星之巷', image: '/assets/projects/xingzhixiang-poster.webp' },
   { type: '信封设计', year: '2026', title: '青草地', image: '/assets/projects/qingcaodi-poster.webp' },
 ]
@@ -126,6 +128,7 @@ export default function Home() {
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [gallerySchoolMenuOpen, setGallerySchoolMenuOpen] = useState(false)
   const [selectedGallerySchool, setSelectedGallerySchool] = useState('')
+  const [buildNotice, setBuildNotice] = useState('')
   const pageProgressRef = useRef<HTMLDivElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const pointerRef = useRef<HTMLDivElement>(null)
@@ -147,14 +150,15 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (!orderOpen && !galleryOpen) return
+    if (!orderOpen && !galleryOpen && !buildNotice) return
     const previousOverflow = document.body.style.overflow
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
       if (galleryOpen) {
         if (gallerySchoolMenuOpen) setGallerySchoolMenuOpen(false)
         else setGalleryOpen(false)
-      } else if (schoolMenuOpen) setSchoolMenuOpen(false)
+      } else if (buildNotice) setBuildNotice('')
+      else if (schoolMenuOpen) setSchoolMenuOpen(false)
       else setOrderOpen(false)
     }
     document.body.style.overflow = 'hidden'
@@ -163,7 +167,7 @@ export default function Home() {
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', closeOnEscape)
     }
-  }, [orderOpen, galleryOpen, schoolMenuOpen, gallerySchoolMenuOpen])
+  }, [orderOpen, galleryOpen, schoolMenuOpen, gallerySchoolMenuOpen, buildNotice])
 
   const openOrderDialog = () => {
     setSchoolMenuOpen(false)
@@ -198,6 +202,12 @@ export default function Home() {
     const school = gallerySchools.find((item) => item.name === selectedGallerySchool)
     if (!school) return
     window.location.assign(`/gallery/${school.slug}`)
+  }
+
+  const openProject = (event: MouseEvent<HTMLAnchorElement>, project: Project) => {
+    if (project.gallery) return
+    event.preventDefault()
+    setBuildNotice(project.title)
   }
 
   useEffect(() => {
@@ -677,7 +687,7 @@ export default function Home() {
         <div className="projects-sticky">
           <div className="project-track" ref={projectTrackRef}>
             <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
-            {projects.map((project) => <article className={`project-card scroll-fade${project.cardClass ? ` ${project.cardClass}` : ''}`} data-scroll-fade="horizontal" key={project.title}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>VIEW PROJECT</span><Arrow /></div></div><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
+            {projects.map((project) => <article className={`project-card scroll-fade${project.cardClass ? ` ${project.cardClass}` : ''}`} data-scroll-fade="horizontal" key={project.title}><a className="project-link" href={project.gallery ? `/gallery/${project.gallery}` : '/gallery/'} aria-haspopup={project.gallery ? undefined : 'dialog'} aria-label={project.gallery ? `进入${project.title}画廊` : `${project.title}画廊还在建设中`} onClick={(event) => openProject(event, project)}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>{project.gallery ? 'VIEW PROJECT' : 'COMING SOON'}</span><Arrow /></div></div></a><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
             <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品" onClick={openGalleryDialog}>MORE <Arrow /></button></div>
           </div>
         </div>
@@ -738,6 +748,16 @@ export default function Home() {
             </div>}
           </div>
           <button className="order-dialog-submit" disabled={!selectedGallerySchool} onClick={openSelectedGallery}>进入画廊 <Arrow /></button>
+        </section>
+      </div>}
+
+      {buildNotice && <div className="order-dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setBuildNotice('') }}>
+        <section className="order-dialog build-notice-dialog" role="dialog" aria-modal="true" aria-labelledby="build-notice-title">
+          <button className="order-dialog-close" aria-label="关闭画廊建设中提示" onClick={() => setBuildNotice('')} autoFocus>×</button>
+          <small>DRIFTPOST GALLERY</small>
+          <h2 id="build-notice-title">画廊建设中</h2>
+          <p><b>{buildNotice}</b>的文创作品画廊还在建设中，完成后会在这里与大家见面。</p>
+          <button className="order-dialog-submit" onClick={() => { setBuildNotice(''); openGalleryDialog() }}>看看其他画廊 <Arrow /></button>
         </section>
       </div>}
     </main>
