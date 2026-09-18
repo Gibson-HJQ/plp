@@ -21,7 +21,7 @@ const heroColumns = [
   ],
 ]
 
-type Club = { school: string; club: string; logo?: string }
+type Club = { school: string; club: string; logo?: string; square?: boolean }
 
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
@@ -63,9 +63,9 @@ const clubs: Club[] = [
   { school: '东莞市海德实验学校', club: '海燕文学社' },
   { school: '东莞市电子商贸学校', club: '朝霞文学社' },
   { school: '东莞市弘林高级中学', club: '南亦书舍文学社' },
-  { school: '东莞市商业学校（东城校区）', club: '听雨文学社' },
   { school: '东莞松山湖未来学校', club: '未星文学社' },
   { school: '东莞市东晖实验学校', club: '青葵文学社' },
+  { school: '东莞市商业学校（东城校区）', club: '听雨文学社', logo: 'tingyu.png', square: true },
 ]
 
 const siteClubs = clubs.filter((club) => club.logo)
@@ -85,12 +85,13 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市济川中学', url: '' },
   { name: '东莞市南城开心实验学校', url: '' },
   { name: '东莞市北辰高级中学', url: '' },
+  { name: '东莞市商业学校（东城校区）', url: '' },
 ]
 
 const projects = [
+  { type: '信封设计', year: '2026', title: '听雨', image: '/assets/projects/tingyu-poster.jpg', cardClass: 'project-card--tingyu' },
   { type: '信封设计', year: '2026', title: '星之巷', image: '/assets/projects/xingzhixiang-poster.webp' },
   { type: '信封设计', year: '2026', title: '青草地', image: '/assets/projects/qingcaodi-poster.webp' },
-  { type: 'Web Application', year: '2025', title: 'File Manager', image: '/assets/projects/file-manager.jpg' },
 ]
 
 const roadmap = [
@@ -611,7 +612,7 @@ export default function Home() {
             <ul className="club-list club-list-featured">
               {siteClubs.map((club, index) => <li className="club-item" key={club.school}>
                 <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className="club-emblem"><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
+                <span className={`club-emblem${club.square ? ' club-emblem-square' : ''}`}><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
                 <span className="club-name"><strong>{club.school}</strong><small>{club.club}</small></span>
               </li>)}
             </ul>
@@ -635,7 +636,7 @@ export default function Home() {
         <div className="projects-sticky">
           <div className="project-track" ref={projectTrackRef}>
             <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
-            {projects.map((project) => <article className="project-card scroll-fade" data-scroll-fade="horizontal" key={project.title}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>VIEW PROJECT</span><Arrow /></div></div><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
+            {projects.map((project) => <article className={`project-card scroll-fade${project.cardClass ? ` ${project.cardClass}` : ''}`} data-scroll-fade="horizontal" key={project.title}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>VIEW PROJECT</span><Arrow /></div></div><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
             <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品" onClick={openGalleryDialog}>MORE <Arrow /></button></div>
           </div>
         </div>
