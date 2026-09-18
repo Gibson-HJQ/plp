@@ -340,14 +340,18 @@ export default function Home() {
     let pointerFrame = 0
     let pointerX = -100
     let pointerY = -100
-    // Touch has no hover: a finger dragging across the screen fires a stream of pointermove
-    // events, which used to give the leaves a huge, screen-wide repulsion. Only fine,
-    // hovering pointers (a mouse) drive the pointer effects.
-    const finePointer = typeof window.matchMedia === 'function'
-      ? window.matchMedia('(hover: hover) and (pointer: fine)')
+    // A finger dragging across the screen used to give the leaves a huge, screen-wide
+    // repulsion. Any device that reports touch capability (or a coarse primary pointer) is
+    // treated as touch-first and never drives the leaf repulsion — this covers iOS Safari,
+    // which can report an unexpected pointerType for touches. A desktop with a mouse still
+    // gets the interactive falling leaves.
+    const coarsePointerQuery = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(any-pointer: coarse)')
       : null
+    const coarsePointer = coarsePointerQuery ? coarsePointerQuery.matches : false
+    const touchFirst = (navigator.maxTouchPoints || 0) > 0 || coarsePointer
     const onPointerMove = (event: PointerEvent) => {
-      if (finePointer && !finePointer.matches) return
+      if (touchFirst) return
       if (event.pointerType && event.pointerType !== 'mouse') return
       pointerX = event.clientX
       pointerY = event.clientY
@@ -384,6 +388,8 @@ export default function Home() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
       window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener('pointerup', onPointerEnd)
+      window.removeEventListener('pointercancel', onPointerEnd)
       window.cancelAnimationFrame(scrollFrame)
       window.cancelAnimationFrame(pointerFrame)
       observer.disconnect()
