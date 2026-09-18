@@ -350,6 +350,14 @@ export default function Home() {
       : null
     const coarsePointer = coarsePointerQuery ? coarsePointerQuery.matches : false
     const touchFirst = (navigator.maxTouchPoints || 0) > 0 || coarsePointer
+    // Temporary diagnostic: helps confirm on a real device which guard value applies.
+    console.info('[driftpost] leaf guard', {
+      maxTouchPoints: navigator.maxTouchPoints,
+      coarsePointer,
+      touchFirst,
+      pointerTypeSupport: 'PointerEvent' in window,
+      ua: navigator.userAgent,
+    })
     const onPointerMove = (event: PointerEvent) => {
       if (touchFirst) return
       if (event.pointerType && event.pointerType !== 'mouse') return
