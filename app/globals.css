@@ -235,8 +235,8 @@ footer{margin-top:92px;justify-content:flex-start}
 .lamp-hint{animation:hint-nudge 1.6s ease-in-out infinite}
 .gallery-lamp:hover,.gallery-lamp:focus-visible{color:#e4bf76}.gallery-lamp:focus-visible{outline:1px solid #e4bf76;outline-offset:6px}
 .gallery-experience.is-lit .gallery-lamp{color:#edcf8c}.gallery-experience.is-lit .gallery-lamp::before,.gallery-experience.is-lit .lamp-glow{opacity:1}.gallery-experience.is-lit .lamp-bulb{fill:#f9db99}
-.gallery-experience .gallery-hero-title,.gallery-experience .gallery-loop-section,.gallery-experience .gallery-hanging-section,.gallery-experience .no7-postcards,.gallery-experience .no7-characters,.gallery-experience .gallery-scenes,.gallery-experience .gallery-character,.gallery-experience .gallery-inscription{transition:filter .8s ease}
-.gallery-experience.is-dim .gallery-hero-title,.gallery-experience.is-dim .gallery-loop-section,.gallery-experience.is-dim .gallery-hanging-section,.gallery-experience.is-dim .no7-postcards,.gallery-experience.is-dim .no7-characters,.gallery-experience.is-dim .gallery-scenes,.gallery-experience.is-dim .gallery-character,.gallery-experience.is-dim .gallery-inscription{filter:grayscale(.96) brightness(.68)}
+.gallery-experience .gallery-hero-title,.gallery-experience .gallery-loop-section,.gallery-experience .gallery-hanging-section,.gallery-experience .no7-postcards,.gallery-experience .no7-characters,.gallery-experience .gallery-scenes,.gallery-experience .gallery-character,.gallery-experience .gallery-inscription,.gallery-experience .gallery-qr{transition:filter .8s ease}
+.gallery-experience.is-dim .gallery-hero-title,.gallery-experience.is-dim .gallery-loop-section,.gallery-experience.is-dim .gallery-hanging-section,.gallery-experience.is-dim .no7-postcards,.gallery-experience.is-dim .no7-characters,.gallery-experience.is-dim .gallery-scenes,.gallery-experience.is-dim .gallery-character,.gallery-experience.is-dim .gallery-inscription,.gallery-experience.is-dim .gallery-qr{filter:grayscale(.96) brightness(.68)}
 .gallery-loop-natural .gallery-loop-frame{padding:0;background:transparent;border:0;box-shadow:none;max-width:100%}
 /* Every frame follows its own photograph's aspect ratio: nothing is cropped. */
 .gallery-loop-natural .gallery-loop-frame img,.gallery-loop-natural .gallery-loop-frame .gallery-placeholder{height:auto;aspect-ratio:auto;object-fit:contain}
@@ -263,6 +263,18 @@ footer{margin-top:92px;justify-content:flex-start}
 .gallery-character-figure{margin:0 auto;width:min(400px,72%);text-align:right}
 .gallery-character-figure img{display:block;width:100%;height:auto;padding:8px;border:1px solid #aaa7a0;background:#fff;box-shadow:0 26px 60px rgba(0,0,0,.42)}
 .gallery-character-figure figcaption{padding-top:14px;color:var(--gallery-muted);font-size:9px;letter-spacing:.14em}
+/* Several club characters: one row, equal widths, each keeping its own frame. */
+.gallery-character-row .gallery-character-grid{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;column-gap:3.4vw;row-gap:60px}
+.gallery-character-row .gallery-character-figure{flex:0 0 27%;width:auto;margin:0}
+/* Pieces after the first three drop to a second row of their own. */
+.gallery-character-row .gallery-character-second-row{display:flex;flex:0 0 100%;flex-wrap:wrap;align-items:flex-start;justify-content:center;column-gap:3.4vw;row-gap:60px}
+.gallery-character-row .gallery-character-second-row .gallery-character-figure{flex:0 0 40%}
+/* WeChat follow code, centred under the inscription. */
+.gallery-qr{padding:20px 4vw 140px;text-align:center}
+.gallery-qr .gallery-section-label{justify-content:center;gap:26px;padding:0 0 26px}
+.gallery-qr-figure{margin:0 auto;width:min(210px,58%)}
+.gallery-qr-figure img{display:block;width:100%;height:auto;padding:10px;border:1px solid #aaa7a0;background:#fff;box-shadow:0 22px 52px rgba(0,0,0,.4)}
+.gallery-qr-figure figcaption{padding-top:16px;color:var(--gallery-muted);font-size:9px;letter-spacing:.16em}
 
 /* Field records: printed matter and event photos in the same dark frame treatment. */
 .gallery-scene-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;column-gap:5vw;row-gap:75px;max-width:1300px;margin:35px auto 0}
@@ -270,6 +282,8 @@ footer{margin-top:92px;justify-content:flex-start}
 .gallery-scene-media{display:block;padding:6px;border:1px solid #3a3733;background:#111;box-shadow:0 25px 56px rgba(0,0,0,.5)}
 .gallery-scene-media img{display:block;width:100%;height:auto}
 .gallery-scene figcaption{padding-top:14px;color:var(--gallery-muted);font-size:9px;letter-spacing:.14em;text-align:right}
+/* A single field record takes the whole row, so the club photo reads larger. */
+.gallery-scene-grid--full{grid-template-columns:minmax(0,1fr)}
 .gallery-hanging-section--natural .gallery-mounted-art{background:#fff;border-color:#aaa7a0}
 .no7-postcard img{border-color:#fff}
 .no7-character-grid{grid-template-columns:minmax(0,.71fr) minmax(0,1fr);grid-template-rows:repeat(2,auto);align-items:stretch;gap:30px}
@@ -280,5 +294,22 @@ footer{margin-top:92px;justify-content:flex-start}
 .no7-character-media{display:grid;place-items:center;flex:1;min-height:0;padding:8px;border:1px solid #aaa7a0;background:#fff;box-shadow:0 25px 56px rgba(0,0,0,.35)}
 .no7-character:not(:nth-child(2)) .no7-character-media{aspect-ratio:1}
 .no7-character-media img{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;border:0;outline:0;box-shadow:none}
+/* 江风's wall. The first row holds three pieces: two portrait posters that keep
+   their own proportions (no cropping), are scaled down so their height stays
+   below the third, and share one width so they land at equal height. They sit
+   together on equal 70px wires; the third keeps its larger size and its wire
+   starts on the same line, but hangs about a third shorter. Auto side margins
+   centre the row without touching the gaps between the pieces. */
+.gallery-hanging-section--wanjiang .gallery-hanging-grid{display:flex;flex-wrap:nowrap;align-items:flex-start;min-height:0;padding-top:34px}
+.gallery-hanging-section--wanjiang .hanging-frame-1{--wire-height:70px;flex:0 0 22%;margin-left:auto}
+.gallery-hanging-section--wanjiang .hanging-frame-2{--wire-height:70px;flex:0 0 22%;margin-left:2%}
+.gallery-hanging-section--wanjiang .hanging-frame-3{--wire-height:42px;flex:0 0 35%;margin-left:2%;margin-right:auto}
+/* A second row of further pieces: equal widths on 3:4 posters, so they line up
+   at one height. Auto side margins let the browser centre the row. */
+.gallery-hanging-section--wanjiang .gallery-hanging-grid:has(.hanging-frame-4){flex-wrap:wrap;row-gap:80px}
+.gallery-hanging-section--wanjiang .hanging-frame-4{--wire-height:70px;flex:0 0 25%;margin-left:auto}
+.gallery-hanging-section--wanjiang .hanging-frame-5{--wire-height:70px;flex:0 0 25%;margin-left:3%}
+.gallery-hanging-section--wanjiang .hanging-frame-6{--wire-height:70px;flex:0 0 25%;margin-left:3%;margin-right:auto}
 @media(max-width:800px){.gallery-hanging-section--tingyu .gallery-hanging-grid{--tingyu-wire:42px;gap:52px 18px}}
+@media(max-width:800px){.gallery-hanging-section--wanjiang .gallery-hanging-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px;padding-top:18px}.gallery-hanging-section--wanjiang .hanging-frame-1,.gallery-hanging-section--wanjiang .hanging-frame-2,.gallery-hanging-section--wanjiang .hanging-frame-3{--wire-height:52px;flex:none;grid-column:auto;margin-left:0;margin-right:0}.gallery-hanging-section--wanjiang .hanging-frame-1,.gallery-hanging-section--wanjiang .hanging-frame-2{width:55%}.gallery-hanging-section--wanjiang .hanging-frame-3{width:100%}}
 @media(max-width:800px){.gallery-lamp{right:9px;width:90px}.lamp-hint{top:104px;right:100px;gap:8px}.lamp-hint-text{font-size:12px}.lamp-hint-line{width:84px;height:36px}.gallery-lamp svg{width:76px;height:154px}.gallery-lamp::before{top:72px;width:120px;height:120px}.gallery-lamp span{font-size:8px}.gallery-character{padding:65px 20px 85px}.gallery-character-figure{width:min(320px,88%)}.no7-character-grid{gap:12px}.no7-character-media{padding:4px}}
