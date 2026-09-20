@@ -301,10 +301,14 @@ export default function Home() {
       const projectSection = projectsRef.current
       const projectTrack = projectTrackRef.current
       if (projectSection && projectTrack) {
-        const distance = Math.max(1, projectSection.offsetHeight - window.innerHeight)
-        const progress = Math.min(1, Math.max(0, (scrollY - projectSection.offsetTop) / distance))
-        const horizontalDistance = Math.max(0, projectTrack.scrollWidth - window.innerWidth)
-        projectTrack.style.transform = `translate3d(${-progress * horizontalDistance}px, 0, 0)`
+        if (window.innerWidth <= 800) {
+          projectTrack.style.transform = 'none'
+        } else {
+          const distance = Math.max(1, projectSection.offsetHeight - window.innerHeight)
+          const progress = Math.min(1, Math.max(0, (scrollY - projectSection.offsetTop) / distance))
+          const horizontalDistance = Math.max(0, projectTrack.scrollWidth - window.innerWidth)
+          projectTrack.style.transform = `translate3d(${-progress * horizontalDistance}px, 0, 0)`
+        }
       }
       const timeline = timelineRef.current
       if (timeline) {
@@ -376,9 +380,11 @@ export default function Home() {
     // keeps reacting to a finger that is no longer there.
     const onPointerEnd = () => parkPointer()
     const onPointerDown = () => parkPointer()
+    const projectScroller = projectsRef.current?.querySelector<HTMLElement>('.projects-sticky')
     updateScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
+    projectScroller?.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('pointermove', onPointerMove, { passive: true })
     window.addEventListener('pointerdown', onPointerDown, { passive: true })
     window.addEventListener('pointerup', onPointerEnd, { passive: true })
@@ -400,6 +406,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      projectScroller?.removeEventListener('scroll', onScroll)
       window.removeEventListener('pointermove', onPointerMove)
       window.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('pointerup', onPointerEnd)
