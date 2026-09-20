@@ -350,18 +350,18 @@ export default function Home() {
     let pointerFrame = 0
     let pointerX = -100
     let pointerY = -100
-    // A finger dragging across the screen used to give the leaves a huge, screen-wide
-    // repulsion. Device-type detection (maxTouchPoints / hover / pointer) proved unreliable
-    // inside mobile in-app browsers, so the guard now reads the event itself: any move made
-    // while a button or finger is held down simply never reaches the leaves. A mouse moving
-    // without a press (buttons === 0) still drives them.
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+    // Only devices with a real hover-capable pointer may disturb the particles. Some mobile
+    // and in-app browsers report a finger drag as a synthetic mouse move with buttons === 0,
+    // so event.pointerType/buttons alone cannot reliably distinguish scrolling from hovering.
     const parkPointer = () => {
       pointerPositionRef.current.x = -1000
       pointerPositionRef.current.y = -1000
     }
     const onPointerMove = (event: PointerEvent) => {
+      if (!finePointer.matches) { parkPointer(); return }
       if (event.buttons !== 0) { parkPointer(); return }
-      if (event.pointerType && event.pointerType !== 'mouse') return
+      if (event.pointerType !== 'mouse') { parkPointer(); return }
       pointerX = event.clientX
       pointerY = event.clientY
       pointerPositionRef.current.x = pointerX
@@ -438,6 +438,7 @@ export default function Home() {
     let height = 0
     let frame = 0
     let leaves: Leaf[] = []
+    const coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)')
     const makeLeaf = (randomY = true): Leaf => ({
       x: Math.random() * width,
       y: randomY ? Math.random() * height : -18,
@@ -453,8 +454,14 @@ export default function Home() {
     })
 
     const resize = () => {
-      width = window.innerWidth
-      height = window.innerHeight
+      const nextWidth = window.innerWidth
+      const nextHeight = window.innerHeight
+      // Mobile address bars change the viewport height while the user scrolls. Rebuilding all
+      // particles for those height-only resizes makes the field visibly jump; a width change
+      // still covers rotation and genuine layout changes.
+      if (coarsePointer.matches && width && nextWidth === width && nextHeight !== height) return
+      width = nextWidth
+      height = nextHeight
       const density = width < 700 ? 12 : Math.min(36, Math.round(width / 40))
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       canvas.width = Math.round(width * dpr)
