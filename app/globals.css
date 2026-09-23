@@ -17,6 +17,7 @@
 .hero-collage{width:500px;overflow:hidden}.hero-column{position:absolute;top:0;width:145px;height:610px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,#000 5%,#000 95%,transparent)}.hero-column-1{left:86px}.hero-column-2{left:241px}.hero-column-track{display:flex;flex-direction:column;gap:10px;will-change:transform}.hero-column-1 .hero-column-track{animation:hero-reel-up 22s linear infinite}.hero-column-2 .hero-column-track{animation:hero-reel-down 25s linear infinite}.hero-column-set{display:flex;flex-direction:column;gap:10px}.hero-column .portrait{position:relative;top:auto;left:auto;flex:0 0 200px;width:145px;height:200px}.hero-motion-rail{position:absolute;top:46px;left:420px;height:518px;display:flex;flex-direction:column;align-items:center;gap:13px;color:var(--muted)}.hero-motion-rail span,.hero-motion-rail small{font-size:7px;letter-spacing:.3em;writing-mode:vertical-rl}.hero-motion-rail i{position:relative;display:block;width:1px;flex:1;background:var(--line);overflow:hidden}.hero-motion-rail b{position:absolute;top:0;left:0;width:1px;height:74px;background:var(--fg);animation:hero-rail-run 3.2s ease-in-out infinite}.hero-motion-rail small{letter-spacing:.16em}
 @keyframes hero-reel-up{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 5px))}}@keyframes hero-reel-down{from{transform:translateY(calc(-50% - 5px))}to{transform:translateY(0)}}@keyframes hero-rail-run{0%{transform:translateY(-100%)}50%{transform:translateY(330px)}100%{transform:translateY(-100%)}}
 @media(max-width:800px){.hero-collage{width:470px;height:430px;margin:35px 0 -90px 30px}.hero-column{height:430px}.hero-motion-rail{top:34px;height:360px}}
+@media(max-width:800px){.hero{height:auto;min-height:max(760px,100svh);padding:64px 20px 20px}.hero-kicker{height:60px;margin-bottom:8px}.hero-collage{height:430px;margin:40px 0 -120px 30px}}
 @media(prefers-reduced-motion:reduce){.hero-column-track,.hero-motion-rail b{animation-play-state:paused}}
 
 /* Desktop hero proportions measured against the supplied 1440 x 774 reference frame. */
@@ -321,3 +322,16 @@ footer{margin-top:92px;justify-content:flex-start}
    grid keeps wrapping so the second-row block can still start a new line. */
 @media(max-width:800px){.gallery-character-row .gallery-character-figure{flex:0 0 28%}.gallery-character-row .gallery-character-grid{column-gap:3%}.gallery-character-row .gallery-character-second-row{flex-basis:100%;flex-wrap:nowrap}.gallery-character-row .gallery-character-second-row .gallery-character-figure{flex:0 0 45%}}
 @media(max-width:800px){.gallery-lamp{right:9px;width:90px}.lamp-hint{top:104px;right:100px;gap:8px}.lamp-hint-text{font-size:12px}.lamp-hint-line{width:84px;height:36px}.gallery-lamp svg{width:76px;height:154px}.gallery-lamp::before{top:72px;width:120px;height:120px}.gallery-lamp span{font-size:8px}.gallery-character{padding:65px 20px 85px}.gallery-character-figure{width:min(320px,88%)}.no7-character-grid{gap:12px}.no7-character-media{padding:4px}}
+
+/* Use vector marks for iconography that must stay consistent across mobile fonts. */
+.arrow{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;flex:0 0 auto;font-size:14px;line-height:1;vertical-align:middle;margin-left:8px}
+.arrow svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.season-toggle{display:grid;place-items:center;padding:0;line-height:0}
+.season-icon{display:block;width:15px;height:15px}
+.season-icon--autumn{color:#e74694}
+.season-icon--autumn path:first-child{fill:currentColor;stroke:currentColor;stroke-width:.45;stroke-linejoin:round}
+.season-icon--autumn path:last-child{fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round}
+.season-icon--winter{color:#a9d9f7;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+.projects-intro .scroll-label{display:flex;align-items:center;gap:14px;font-size:10px!important;letter-spacing:.24em}
+.scroll-label-arrow{display:inline-flex;align-items:center;justify-content:center;width:20px;height:14px;flex:0 0 auto}
+.scroll-label-arrow svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}

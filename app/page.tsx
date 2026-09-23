@@ -106,7 +106,13 @@ const roadmap = [
 
 const ticker = 'LETTERS ACROSS DISTANCE  •  WORDS WITH INTENTION  •  AUTUMN CORRESPONDENCE  •  CONNECTION BEYOND CAMPUSES  •  RELAY BORN OF PASSION  •  ROMANCE BELONGING TO STUDENTS  •  '
 
-function Arrow() { return <span className="arrow">↗</span> }
+function Arrow() {
+  return <span className="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M3 13 13 3M5 3h8v8" /></svg></span>
+}
+
+function ArrowRight() {
+  return <span className="scroll-label-arrow" aria-hidden="true"><svg viewBox="0 0 18 12" focusable="false"><path d="M1 6h15m-5-5 5 5-5 5" /></svg></span>
+}
 
 function LetteredWord({ text }: { text: string }) {
   return <span className="lettered-word" aria-label={text}>{Array.from(text).map((letter, index) => <span aria-hidden="true" key={`${letter}-${index}`}>{letter}</span>)}</span>
@@ -622,7 +628,11 @@ export default function Home() {
           {[['about', 'about'], ['stack', 'club'], ['projects', 'design'], ['roadmap', 'roadmap'], ['contact', 'contact']].map(([target, label]) => <button key={target} onClick={() => scrollTo(target)}>{label}</button>)}
         </nav>
         <div className="nav-actions">
-          <button className="season-toggle" aria-label={season === 'autumn' ? '切换为冬季模式' : '切换为秋季模式'} title={season === 'autumn' ? '当前：秋季，点击切换冬季' : '当前：冬季，点击切换秋季'} onClick={() => setSeason(season === 'autumn' ? 'winter' : 'autumn')}><span aria-hidden="true">{season === 'autumn' ? '🍁' : '❄'}</span></button>
+          <button className="season-toggle" aria-label={season === 'autumn' ? '切换为冬季模式' : '切换为秋季模式'} title={season === 'autumn' ? '当前：秋季，点击切换冬季' : '当前：冬季，点击切换秋季'} onClick={() => setSeason(season === 'autumn' ? 'winter' : 'autumn')}>
+            {season === 'autumn'
+              ? <svg className="season-icon season-icon--autumn" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 1.7 1.5 3.1 3.2-1-.6 3.4 3.4.6-2.3 2.7 2.7 2.2-3.3 1.2.8 3.4-3.2-.9-1.1 3.3-1.9-2.8-2.8 2-.1-3.5-3.5-.2 2.1-2.8-2.8-2 3.1-1.5-1.2-3.2 3.5.3z"/><path d="m11.2 13.2 1.1 8.6"/></svg>
+              : <svg className="season-icon season-icon--winter" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M9.3 4.8 12 7.5l2.7-2.7M9.3 19.2 12 16.5l2.7 2.7M4.1 10.1l3.7-.7-.7-3.7M16.9 18.3l.7-3.7 3.7.7M4.1 13.9l3.7.7-.7 3.7M16.9 5.7l.7 3.7 3.7-.7"/></svg>}
+          </button>
           <button aria-label="Toggle theme" className="theme-toggle" onClick={() => setLight(!light)}>{light ? '☼' : '◐'}</button>
         </div>
       </header>
@@ -700,7 +710,7 @@ export default function Home() {
       <section id="projects" className="projects" ref={projectsRef}>
         <div className="projects-sticky">
           <div className="project-track" ref={projectTrackRef}>
-            <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE &nbsp; →</small></div>
+            <div className="projects-intro scroll-fade" data-scroll-fade="project-title"><small>[003]</small><h2>DESIGN</h2><p className="projects-subtitle">高中文创画廊</p><p className="projects-description">收录各校文学社精心设计的文创作品，<br />这里是我们留给时光的小小存档。</p><small className="scroll-label">SCROLL TO EXPLORE <ArrowRight /></small></div>
             {projects.map((project) => <article className={`project-card scroll-fade${project.cardClass ? ` ${project.cardClass}` : ''}`} data-scroll-fade="horizontal" key={project.title}><a className="project-link" href={project.gallery ? `/gallery/${project.gallery}` : '/gallery/'} aria-haspopup={project.gallery ? undefined : 'dialog'} aria-label={project.gallery ? `进入${project.title}画廊` : `${project.title}画廊还在建设中`} onClick={(event) => openProject(event, project)}><div className="project-image"><img src={project.image} alt={project.title} /><div className="project-overlay"><span>{project.gallery ? 'VIEW PROJECT' : 'COMING SOON'}</span><Arrow /></div></div></a><div className="project-meta"><span>{project.type}</span><span>{project.year}</span></div><h3>{project.title}</h3></article>)}
             <div className="project-end scroll-fade" data-scroll-fade="horizontal"><button className="project-more-button" type="button" aria-label="查看更多文创作品" onClick={openGalleryDialog}>MORE <Arrow /></button></div>
           </div>
