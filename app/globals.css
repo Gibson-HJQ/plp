@@ -262,6 +262,7 @@ footer{margin-top:92px;justify-content:flex-start}
 /* Club character on its own shelf, scaled down so it sits beside the archive rather than dominating it. */
 .gallery-character{padding:85px 4vw 110px;border-top:1px solid var(--gallery-line)}
 .gallery-character-figure{margin:0 auto;width:min(400px,72%);text-align:right}
+.gallery-character--humen .gallery-character-figure{width:min(460px,78%)}
 .gallery-character-figure img{display:block;width:100%;height:auto;padding:8px;border:1px solid #aaa7a0;background:#fff;box-shadow:0 26px 60px rgba(0,0,0,.42)}
 .gallery-character-figure figcaption{padding-top:14px;color:var(--gallery-muted);font-size:9px;letter-spacing:.14em}
 /* Several club characters: one row, equal widths, each keeping its own frame. */
@@ -321,7 +322,7 @@ footer{margin-top:92px;justify-content:flex-start}
 /* Character row and its merch row stay single rows on phones as well. The outer
    grid keeps wrapping so the second-row block can still start a new line. */
 @media(max-width:800px){.gallery-character-row .gallery-character-figure{flex:0 0 28%}.gallery-character-row .gallery-character-grid{column-gap:3%}.gallery-character-row .gallery-character-second-row{flex-basis:100%;flex-wrap:nowrap}.gallery-character-row .gallery-character-second-row .gallery-character-figure{flex:0 0 45%}}
-@media(max-width:800px){.gallery-lamp{right:9px;width:90px}.lamp-hint{top:104px;right:100px;gap:8px}.lamp-hint-text{font-size:12px}.lamp-hint-line{width:84px;height:36px}.gallery-lamp svg{width:76px;height:154px}.gallery-lamp::before{top:72px;width:120px;height:120px}.gallery-lamp span{font-size:8px}.gallery-character{padding:65px 20px 85px}.gallery-character-figure{width:min(320px,88%)}.no7-character-grid{gap:12px}.no7-character-media{padding:4px}}
+@media(max-width:800px){.gallery-lamp{right:9px;width:90px}.lamp-hint{top:104px;right:100px;gap:8px}.lamp-hint-text{font-size:12px}.lamp-hint-line{width:84px;height:36px}.gallery-lamp svg{width:76px;height:154px}.gallery-lamp::before{top:72px;width:120px;height:120px}.gallery-lamp span{font-size:8px}.gallery-character{padding:65px 20px 85px}.gallery-character-figure{width:min(320px,88%)}.gallery-character--humen .gallery-character-figure{width:min(360px,92%)}.no7-character-grid{gap:12px}.no7-character-media{padding:4px}}
 
 /* Use vector marks for iconography that must stay consistent across mobile fonts. */
 .arrow{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;flex:0 0 auto;font-size:14px;line-height:1;vertical-align:middle;margin-left:8px}

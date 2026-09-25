@@ -36,9 +36,10 @@ export default function SchoolGallery({ params }: GalleryPageProps) {
   const isYuehua = school.slug === 'yuehua'
   const isWanjiang = school.slug === 'wanjiang'
   const isTingyu = school.slug === 'tingyu'
+  const isHumen = school.slug === 'humen-foreign-languages'
   // Galleries that use prefixed filenames to drive their sections.
   const usesPrefixedSections = isNo7 || isTingyu || isWanjiang
-  const images = isNo7 || isYuehua || isWanjiang || isTingyu ? allImages.filter((file) => /^\d{2}-/.test(file)) : allImages
+  const images = isNo7 || isYuehua || isWanjiang || isTingyu || isHumen ? allImages.filter((file) => /^\d{2}-/.test(file)) : allImages
   const wallImages = usesPrefixedSections ? allImages.filter((file) => /^wall-\d{2}-/.test(file)) : []
   const postcards = usesPrefixedSections ? allImages.filter((file) => /^postcard-\d{2}-/.test(file)) : []
   const scenes = isTingyu || isWanjiang ? allImages.filter((file) => /^scene-\d{2}-/.test(file)) : []
@@ -50,6 +51,7 @@ export default function SchoolGallery({ params }: GalleryPageProps) {
   // the others show the one piece.
   const featureImages = isWanjiang
     ? ['character-06.png', 'character-05.png', 'character-07.png', 'character-08-merch.jpg'].filter((file) => allImages.includes(file))
+    : isHumen ? ['character-01.png'].filter((file) => allImages.includes(file))
     : featureImage ? [featureImage] : []
   const footerQr = isWanjiang && allImages.includes('footer-01-wechat-qr.jpg') ? 'footer-01-wechat-qr.jpg' : undefined
   const notePath = path.join(galleryDirectory, 'note.txt')

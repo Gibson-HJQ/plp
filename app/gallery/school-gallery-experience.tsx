@@ -43,7 +43,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
       : []
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightsOn, setLightsOn] = useState(false)
-  const hasGalleryLamp = schoolSlug === 'no7-senior' || hasFeatureLayout || schoolSlug === 'tingyu'
+  const hasGalleryLamp = schoolSlug === 'no7-senior' || hasFeatureLayout || schoolSlug === 'tingyu' || schoolSlug === 'humen-foreign-languages'
 
   const move = (direction: number) => setActiveIndex((current) => (current + direction + items.length) % items.length)
 
@@ -78,8 +78,8 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
       </button>}
     </section>
 
-    <section className={`gallery-loop-section${schoolSlug === 'no7-senior' || hasFeatureLayout || schoolSlug === 'tingyu' ? ' gallery-loop-natural' : ''}`} aria-label={`${clubName}循环作品画廊`}>
-      <div className="gallery-section-label"><span>SELECTED WORKS</span><span>USE ARROWS TO CYCLE</span></div>
+    <section className={`gallery-loop-section${schoolSlug === 'no7-senior' || hasFeatureLayout || schoolSlug === 'tingyu' || schoolSlug === 'humen-foreign-languages' ? ' gallery-loop-natural' : ''}`} aria-label={`${clubName}循环作品画廊`}>
+      <div className="gallery-section-label"><span>SELECTED WORKS</span><span>滑动阅览</span></div>
       <div className="gallery-loop">
         {items.map((item, index) => {
           const offset = circularOffset(index)
@@ -105,7 +105,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
     </section>
 
     {wallItems.length > 0 && <section className={`gallery-hanging-section${schoolSlug === 'no7-senior' ? ' gallery-hanging-section--no7 gallery-hanging-section--natural' : ''}${hasFeatureLayout ? ' gallery-hanging-section--feature gallery-hanging-section--natural' : ''}${schoolSlug === 'tingyu' ? ' gallery-hanging-section--tingyu' : ''}${schoolSlug === 'wanjiang' ? ' gallery-hanging-section--wanjiang' : ''}`} aria-label="独立展出作品">
-      <div className="gallery-section-label"><span>ON THE WALL</span><span>{String(wallItems.length).padStart(2, '0')} FRAMES</span></div>
+      <div className="gallery-section-label"><span>ON THE WALL</span><span>壁画</span></div>
       <div className="gallery-hanging-grid">
         {wallItems.map((item, index) => <figure className={`gallery-hanging-frame hanging-frame-${index + 1}`} key={item.image ?? `hanging-empty-${index}`}>
           <div className="gallery-wire" aria-hidden="true" />
@@ -115,8 +115,8 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
       </div>
     </section>}
 
-    {featureImages.length > 0 && <section className={`gallery-character${featureImages.length > 1 ? ' gallery-character-row' : ''}`} aria-label={`${clubName}社拟人物`}>
-      <div className="gallery-section-label"><span>CHARACTER</span><span>{String(featureImages.length).padStart(2, '0')} {featureImages.length > 1 ? 'PIECES' : 'PIECE'}</span></div>
+    {featureImages.length > 0 && <section className={`gallery-character${featureImages.length > 1 ? ' gallery-character-row' : ''}${schoolSlug === 'humen-foreign-languages' ? ' gallery-character--humen' : ''}`} aria-label={`${clubName}社拟人物`}>
+      <div className="gallery-section-label"><span>CHARACTER</span><span>社拟角色</span></div>
       <div className="gallery-character-grid">
         {featureImages.slice(0, 3).map((image, index) => <figure className="gallery-character-figure" key={image}>
           <img src={`/assets/galleries/${schoolSlug}/${encodeURIComponent(image)}`} alt={`${clubName}社拟形象 ${index + 1}`} />
@@ -132,7 +132,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
     </section>}
 
     {postcards.length > 0 && <section className="no7-postcards" aria-label={`${clubName}${schoolSlug === 'tingyu' ? '社拟人物' : '明信片'}`}>
-      <div className="gallery-section-label"><span>{schoolSlug === 'tingyu' ? 'CHARACTER' : 'POSTCARDS'}</span><span>{String(postcards.length).padStart(2, '0')} WORKS</span></div>
+      <div className="gallery-section-label"><span>{schoolSlug === 'tingyu' ? 'CHARACTER' : 'POSTCARDS'}</span><span>{schoolSlug === 'tingyu' ? '社拟角色' : '明信片'}</span></div>
       <div className="no7-postcard-grid">
         {postcards.map((image, index) => <figure className="no7-postcard" key={image}>
           <img src={`/assets/galleries/${schoolSlug}/${encodeURIComponent(image)}`} alt={`${clubName}${schoolSlug === 'tingyu' ? '社拟人物' : '明信片'} ${index + 1}`} />
@@ -142,7 +142,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
     </section>}
 
     {scenes.length > 0 && <section className="gallery-scenes" aria-label={`${clubName}文创与活动现场`}>
-      <div className="gallery-section-label"><span>IN THE FIELD</span><span>{String(scenes.length).padStart(2, '0')} RECORDS</span></div>
+      <div className="gallery-section-label"><span>IN THE FIELD</span><span>实拍</span></div>
       <div className={`gallery-scene-grid${scenes.length === 1 ? ' gallery-scene-grid--full' : ''}`}>
         {scenes.map((image, index) => <figure className="gallery-scene" key={image}>
           <span className="gallery-scene-media"><img src={`/assets/galleries/${schoolSlug}/${encodeURIComponent(image)}`} alt={`${clubName}文创与活动现场 ${index + 1}`} /></span>
@@ -152,7 +152,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
     </section>}
 
     {characters.length > 0 && <section className="no7-characters" aria-label="秋枫文学社社拟人物">
-      <div className="gallery-section-label"><span>CLUB CHARACTERS</span><span>{String(characters.length).padStart(2, '0')} PORTRAITS</span></div>
+      <div className="gallery-section-label"><span>CLUB CHARACTERS</span><span>社拟角色</span></div>
       <div className="no7-character-grid">
         {characters.map((image, index) => <figure className="no7-character" key={image}>
           <div className="no7-character-media"><img src={`/assets/galleries/${schoolSlug}/${encodeURIComponent(image)}`} alt={`${clubName}社拟人物 ${index + 1}`} /></div>
@@ -169,7 +169,7 @@ export default function SchoolGalleryExperience({ schoolName, clubName, schoolSl
     </section>
 
     {footerQr && <section className="gallery-qr" aria-label={`${clubName}微信公众号`}>
-      <div className="gallery-section-label"><span>FOLLOW</span><span>WECHAT</span></div>
+      <div className="gallery-section-label"><span>FOLLOW</span><span>微信公众号</span></div>
       <figure className="gallery-qr-figure">
         <img src={`/assets/galleries/${schoolSlug}/${encodeURIComponent(footerQr)}`} alt={`${clubName}微信公众号二维码`} />
         <figcaption>扫码关注 {clubName}</figcaption>
