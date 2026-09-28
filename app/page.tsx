@@ -8,7 +8,6 @@ const heroColumns = [
     { file: 'jiangfeng.png', name: '江风文学社社徽' },
     { file: 'yundiao.webp', name: '云雕文学社社徽' },
     { file: 'xingzhixiang.webp', name: '星之巷文学社社徽' },
-    { file: 'qinghewan.webp', name: '青鹤湾文学社社徽' },
     { file: 'huqing.webp', name: '虎青新闻社社徽' },
   ],
   [
@@ -21,12 +20,12 @@ const heroColumns = [
   ],
 ]
 
-type Club = { school: string; club: string; logo?: string; square?: boolean }
+type Club = { school: string; club: string; logo?: string; square?: boolean; featured?: boolean }
 
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
   { school: '东莞市第七高级中学', club: '秋枫文学社', logo: 'qiufeng.png' },
-  { school: '东莞市海逸外国语学校', club: '海逸文学社（待确认）' },
+  { school: '东莞市海逸外国语学校', club: '海逸文学社（待确认）', featured: true },
   { school: '东莞理工学校', club: '竹韵诗词社' },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
   { school: '东莞市南城开心实验学校', club: '52Herz文学社', logo: 'school-52.webp' },
@@ -36,9 +35,9 @@ const clubs: Club[] = [
   { school: '东莞市虎门中学', club: '春蕾文学社' },
   { school: '东莞市电子科技学校（中职代表）', club: '浪潮文学社' },
   { school: '东莞外国语学校', club: '候鸟文学社' },
-  { school: '东莞市长安中学', club: '莲峰文学社' },
+  { school: '东莞市长安中学', club: '莲峰文学社', featured: true },
   { school: '东莞市东方明珠学校', club: '长庚文学社' },
-  { school: '东莞市第八高级中学', club: '山风文学社' },
+  { school: '东莞市第八高级中学', club: '山风文学社', featured: true },
   { school: '东莞市东华高级中学（东城校区）', club: '旗峰文学社' },
   { school: '东莞市翰林高级学校', club: '兰襟文学社' },
   { school: '东莞市济川中学', club: '沐博文学社', logo: 'mubo.webp' },
@@ -52,40 +51,53 @@ const clubs: Club[] = [
   { school: '东莞市海德双语学校', club: '拾遗文学社' },
   { school: '东莞市第五高级中学', club: '汉苑文学社' },
   { school: '东莞市翰林实验学校', club: '伴路文学社' },
-  { school: '东莞市常平中学', club: '青鹤湾文学社', logo: 'qinghewan.webp' },
+  { school: '东莞市常平中学', club: '青鹤湾文学社' },
   { school: '东莞市第四高级中学', club: '芜春文学社' },
   { school: '东莞市第一中学', club: '繁蕊文学社' },
+  { school: '东莞市第一中学', club: '雪雁文学社' },
   { school: '东莞市北辰高级中学', club: '星之巷文学社', logo: 'xingzhixiang.webp' },
   { school: '东莞市东华高级中学（生态园校区）', club: '燕岭文学社' },
   { school: '东莞市光明中学', club: '景行文学社' },
   { school: '东莞高级中学', club: '青草地文学社', logo: 'qingcaodi.webp' },
-  { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社' },
+  { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社', featured: true },
   { school: '东莞市海德实验学校', club: '海燕文学社' },
   { school: '东莞市电子商贸学校', club: '朝霞文学社' },
-  { school: '东莞市弘林高级中学', club: '南亦书舍文学社' },
+  { school: '东莞市弘林高级中学', club: '南亦书舍文学社', featured: true },
+  { school: '东莞市松山湖莞美学校', club: '行知文学社', featured: true },
+  { school: '东莞市大岭山中学', club: '山青文学社', logo: 'shanqing.png', featured: true },
+  { school: '东莞市嘉荣外国语学校', club: '嘉韵文学社', featured: true },
   { school: '东莞松山湖未来学校', club: '未星文学社' },
   { school: '东莞市东晖实验学校', club: '青葵文学社' },
   { school: '东莞市商业学校（东城校区）', club: '听雨文学社', logo: 'tingyu.png', square: true },
 ]
 
-const siteClubs = clubs.filter((club) => club.logo)
-const activityOnlyClubs = clubs.filter((club) => !club.logo)
+const siteClubs = clubs.filter((club) => club.logo || club.featured)
+const activityOnlyClubs = clubs.filter((club) => !club.logo && !club.featured)
+const schoolCount = new Set(clubs.map((club) => club.school)).size
 
 type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
-  { name: '东莞市万江中学', url: '' },
-  { name: '东莞市第七高级中学', url: '' },
+  { name: '东莞市万江中学', url: 'https://xtfvzrr0.jsjform.com/f/fq2Z1n', qr: '/assets/order-qr/jiangfeng.png' },
+  { name: '东莞市第七高级中学', url: 'https://xtfvzrr0.jsjform.com/f/s0ZZNP', qr: '/assets/order-qr/qiufeng.png' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.png' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },
   { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
-  { name: '东莞市常平中学', url: 'https://xtfvzrr0.jsjform.com/f/F1wGDU', qr: '/assets/order-qr/qinghewan.png' },
+  { name: '东莞市常平中学', url: '' },
   { name: '东莞市粤华学校', url: 'https://xtfvzrr0.jsjform.com/f/ukG9pM', qr: '/assets/order-qr/liuyue.png' },
-  { name: '东莞市济川中学', url: '' },
-  { name: '东莞市南城开心实验学校', url: '' },
-  { name: '东莞市北辰高级中学', url: '' },
-  { name: '东莞市商业学校（东城校区）', url: '' },
+  { name: '东莞市济川中学', url: 'https://xtfvzrr0.jsjform.com/f/YPagjR', qr: '/assets/order-qr/jichuan.png' },
+  { name: '东莞市南城开心实验学校', url: 'https://xtfvzrr0.jsjform.com/f/Itu1jq', qr: '/assets/order-qr/52herz.png' },
+  { name: '东莞市北辰高级中学', url: 'https://xtfvzrr0.jsjform.com/f/y4XTkU', qr: '/assets/order-qr/beichen.png' },
+  { name: '东莞市商业学校（东城校区）', url: 'https://xtfvzrr0.jsjform.com/f/PyDpv4', qr: '/assets/order-qr/commercial-dongcheng.jpg' },
+  { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
+  { name: '东莞市松山湖莞美学校', url: 'https://xtfvzrr0.jsjform.com/f/pRvJFy', qr: '/assets/order-qr/guanmei.png' },
+  { name: '东莞市长安中学', url: 'https://xtfvzrr0.jsjform.com/f/S4L49J', qr: '/assets/order-qr/changan.png' },
+  { name: '东莞市海逸外国语学校', url: 'https://xtfvzrr0.jsjform.com/f/Juznoc', qr: '/assets/order-qr/haiyi.png' },
+  { name: '东莞市第八高级中学', url: 'https://xtfvzrr0.jsjform.com/f/knkA0O', qr: '/assets/order-qr/no8.png' },
+  { name: '东莞市商业学校（莞城校区）', url: 'https://xtfvzrr0.jsjform.com/f/ZVDc4Z', qr: '/assets/order-qr/commercial-guancheng.png' },
+  { name: '东莞市大岭山中学', url: 'https://xtfvzrr0.jsjform.com/f/TZ1mF3', qr: '/assets/order-qr/dalingshan.png' },
+  { name: '东莞市嘉荣外国语学校', url: 'https://xtfvzrr0.jsjform.com/f/H2n45A', qr: '/assets/order-qr/jiarong.png' },
 ]
 
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
@@ -131,6 +143,7 @@ export default function Home() {
   const [selectedSchool, setSelectedSchool] = useState('')
   const [orderNotice, setOrderNotice] = useState('')
   const [orderQrSchool, setOrderQrSchool] = useState('')
+  const selectedOrderSchool = orderSchools.find((school) => school.name === selectedSchool)
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [gallerySchoolMenuOpen, setGallerySchoolMenuOpen] = useState(false)
   const [selectedGallerySchool, setSelectedGallerySchool] = useState('')
@@ -680,14 +693,14 @@ export default function Home() {
       <div className="ticker"><span>{ticker}</span><span>{ticker}</span></div>
 
       <section id="stack" className="stack club-section content-section">
-        <div className="section-heading club-heading focus-reveal-item"><small>[002]</small><h2>SCHOOLS &amp; CLUBS</h2><p>本届活动共有 {clubs.length} 所学校与校区参与，其中 {siteClubs.length} 个社团已上线网站。</p></div>
+        <div className="section-heading club-heading focus-reveal-item"><small>[002]</small><h2>SCHOOLS &amp; CLUBS</h2><p>本届活动共有 {schoolCount} 所学校与校区参与，共有 {clubs.length} 个社团，其中 {siteClubs.length} 个已上线网站。</p></div>
         <div className="club-groups">
           <section className="club-group club-group-featured focus-reveal-item" aria-labelledby="site-clubs-title">
             <div className="club-group-heading"><div><small>ONLINE CLUBS</small><h3 id="site-clubs-title">已上线网站的社团</h3></div><span>{String(siteClubs.length).padStart(2, '0')} / {String(clubs.length).padStart(2, '0')}</span></div>
             <ul className="club-list club-list-featured">
-              {siteClubs.map((club, index) => <li className="club-item" key={club.school}>
+              {siteClubs.map((club, index) => <li className="club-item" key={`${club.school}-${club.club}`}>
                 <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className={`club-emblem${club.square ? ' club-emblem-square' : ''}`}><img src={`/assets/hero-emblems/${club.logo}`} alt="" /></span>
+                <span className={`club-emblem${club.square ? ' club-emblem-square' : ''}${club.logo ? '' : ' club-emblem-empty'}`}>{club.logo && <img src={`/assets/hero-emblems/${club.logo}`} alt="" />}</span>
                 <span className="club-name"><strong>{club.school}</strong><small>{club.club}</small></span>
               </li>)}
             </ul>
@@ -696,7 +709,7 @@ export default function Home() {
             <div className="club-group-heading"><div><small>ACTIVITY PARTICIPANTS</small><h3 id="activity-clubs-title">其他活动参与学校</h3></div><span>{String(activityOnlyClubs.length).padStart(2, '0')} / {String(clubs.length).padStart(2, '0')}</span></div>
             <p className="club-group-note">同样参与漂流瓶活动，目前未上线网站。</p>
             <ul className="club-list club-list-community">
-              {activityOnlyClubs.map((club, index) => <li className="club-item club-item-plain" key={club.school}>
+              {activityOnlyClubs.map((club, index) => <li className="club-item club-item-plain" key={`${club.school}-${club.club}`}>
                 <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
                 <span className="club-name"><strong>{club.school}</strong><small>{club.club}</small></span>
               </li>)}
@@ -749,10 +762,10 @@ export default function Home() {
             <div className="order-school-picker">
               <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
               {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
-                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(''); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(school.qr || school.url ? '' : '该学校的订购二维码稍后开放'); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
               </div>}
             </div>
-            <button className="order-dialog-submit" disabled={!selectedSchool} onClick={submitOrder}>{orderSchools.find((school) => school.name === selectedSchool)?.qr ? '显示订购二维码' : '立即订购'} <Arrow /></button>
+            <button className="order-dialog-submit" disabled={!selectedSchool || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购暂未开放' : '立即订购'}{selectedOrderSchool?.qr || selectedOrderSchool?.url ? <Arrow /> : null}</button>
             <p className="order-dialog-notice" role="status">{orderNotice}</p>
           </>}
         </section>
