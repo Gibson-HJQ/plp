@@ -35,7 +35,7 @@ const clubs: Club[] = [
   { school: '东莞市虎门中学', club: '春蕾文学社' },
   { school: '东莞市电子科技学校（中职代表）', club: '浪潮文学社' },
   { school: '东莞外国语学校', club: '候鸟文学社' },
-  { school: '东莞市长安中学', club: '莲峰文学社', featured: true },
+  { school: '东莞市长安中学', club: '莲峰文学社', logo: 'lianfeng.png', featured: true },
   { school: '东莞市东方明珠学校', club: '长庚文学社' },
   { school: '东莞市第八高级中学', club: '山风文学社', featured: true },
   { school: '东莞市东华高级中学（东城校区）', club: '旗峰文学社' },
@@ -59,13 +59,13 @@ const clubs: Club[] = [
   { school: '东莞市东华高级中学（生态园校区）', club: '燕岭文学社' },
   { school: '东莞市光明中学', club: '景行文学社' },
   { school: '东莞高级中学', club: '青草地文学社', logo: 'qingcaodi.webp' },
-  { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社', featured: true },
+  { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社' },
   { school: '东莞市海德实验学校', club: '海燕文学社' },
   { school: '东莞市电子商贸学校', club: '朝霞文学社' },
   { school: '东莞市弘林高级中学', club: '南亦书舍文学社', featured: true },
-  { school: '东莞市松山湖莞美学校', club: '行知文学社', featured: true },
+  { school: '东莞市松山湖莞美学校', club: '行知文学社', logo: 'xingzhi.png', featured: true },
   { school: '东莞市大岭山中学', club: '山青文学社', logo: 'shanqing.png', featured: true },
-  { school: '东莞市嘉荣外国语学校', club: '嘉韵文学社', featured: true },
+  { school: '东莞市嘉荣外国语学校', club: '嘉韵文学社', logo: 'jiayun.png', featured: true },
   { school: '东莞松山湖未来学校', club: '未星文学社' },
   { school: '东莞市东晖实验学校', club: '青葵文学社' },
   { school: '东莞市商业学校（东城校区）', club: '听雨文学社', logo: 'tingyu.png', square: true },
@@ -89,13 +89,12 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市济川中学', url: 'https://xtfvzrr0.jsjform.com/f/YPagjR', qr: '/assets/order-qr/jichuan.png' },
   { name: '东莞市南城开心实验学校', url: 'https://xtfvzrr0.jsjform.com/f/Itu1jq', qr: '/assets/order-qr/52herz.png' },
   { name: '东莞市北辰高级中学', url: 'https://xtfvzrr0.jsjform.com/f/y4XTkU', qr: '/assets/order-qr/beichen.png' },
-  { name: '东莞市商业学校（东城校区）', url: 'https://xtfvzrr0.jsjform.com/f/PyDpv4', qr: '/assets/order-qr/commercial-dongcheng.jpg' },
+  { name: '东莞市商业学校（东城校区）', url: 'https://xtfvzrr0.jsjform.com/f/PyDpv4', qr: '/assets/order-qr/commercial-dongcheng.png' },
   { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
   { name: '东莞市松山湖莞美学校', url: 'https://xtfvzrr0.jsjform.com/f/pRvJFy', qr: '/assets/order-qr/guanmei.png' },
   { name: '东莞市长安中学', url: 'https://xtfvzrr0.jsjform.com/f/S4L49J', qr: '/assets/order-qr/changan.png' },
   { name: '东莞市海逸外国语学校', url: 'https://xtfvzrr0.jsjform.com/f/Juznoc', qr: '/assets/order-qr/haiyi.png' },
   { name: '东莞市第八高级中学', url: 'https://xtfvzrr0.jsjform.com/f/knkA0O', qr: '/assets/order-qr/no8.png' },
-  { name: '东莞市商业学校（莞城校区）', url: 'https://xtfvzrr0.jsjform.com/f/ZVDc4Z', qr: '/assets/order-qr/commercial-guancheng.png' },
   { name: '东莞市大岭山中学', url: 'https://xtfvzrr0.jsjform.com/f/TZ1mF3', qr: '/assets/order-qr/dalingshan.png' },
   { name: '东莞市嘉荣外国语学校', url: 'https://xtfvzrr0.jsjform.com/f/H2n45A', qr: '/assets/order-qr/jiarong.png' },
 ]
@@ -660,15 +659,17 @@ export default function Home() {
               </div>
               <div className="about-icon-stage about-stage-item"><img className="about-writing-image" src="/assets/about/hand-writing.png" alt="执笔写信的手" /></div>
             </div>
-            <div className="about-copy">
-              <h3 className="about-headline-stage about-stage-item">在打字方便的时代，<br />写信依旧是学生的浪漫</h3>
+            <div className={`about-copy${expanded ? ' about-copy-expanded' : ''}`}>
+              <h3 className="about-headline-stage about-stage-item">在信息便捷的时代，<br />我们依旧选择用笔书写。</h3>
               <div className="about-body-stage">
-                <p className="about-body-line-1 about-stage-item">自2019年始，我们有了一个<strong>约定</strong>。每逢秋深，东莞五十余所高中与中职的少年援笔书怀，将祝福与思念封入素笺；再经一场跨越全城的<strong>接力</strong>——统一收集、校际交换、逐一送达——由<strong>各校文学社</strong>，把每一份心意，稳稳送到对方手中。这便是<strong>漂流瓶</strong>活动，全东莞市规模最大的校际书信交流。</p>
-                <p className="about-body-line-2 about-stage-item">活动每年以一个诗词主题启程：2023 年「鸿雁锦书」、2024 年「闲潭梦落」、2025 年「焉问鱼沉」、2026 年「香笺承意」。</p>
-                <p className="about-body-line-3 about-stage-item"><strong>那些难能面诉的话，都借由书信来抵达。</strong></p>
+                <p className="about-body-line-1 about-stage-item">不知道从什么时候开始，我们逐渐忙碌于不断的信息间，每个小红点、每条未来得及处理的消息，都变成了指尖的滑动。旧日的光影好像永远来不及回顾，旧日的朋友也随生活不断地抵达或离开，好像再无法轻易寻得足迹。从初中升到高中，再从高中走向今后更广阔的世界。在即将过去的三年，乃至于更遥远的十年、三十年后，有什么能够经受时间的冲洗，仍旧可以保留些什么，让人再度记忆起这年轻的时节？我们与朋友共同度过的时日，我们为之悲伤、喜悦、青涩的校园生活？于是，在信息便捷的时代，我们依旧选择用笔书写。</p>
+                <p className="about-body-line-2 about-stage-item">东莞高中漂流瓶活动从2013年启动，但自2019年始，全东莞市高中文学社团共同为全市高中生做了一个约定。每逢秋深，要让东莞五十余所高中与中职的同学们通过执笔，用最单纯的书写，通过好像早已过时的信件，将自己与自己的生活真实地记录下来，把与朋友的友谊再度连接，为东莞市高中学子留下一份有关自己高中生活的独特纪念与时代回忆。由此走到今年第十五届，化为名为“东莞市高中漂流瓶”的全东莞市规模最大的校际书信交流活动。</p>
+                {expanded && <div className="expanded about-expanded about-stage-item">
+                  <p>我们感谢这十五届以来所有参与活动的同学们、各高中文学社团的工作人员，以及支持“漂流瓶”活动开展的社会各界人士。自东莞市漂流瓶活动由东莞市高中文学交流会接手后，2019至2026年这八年来，若没有东莞市近百万高中学子的支持、五十多所高中文学社团成员的辛勤付出，以及社会各界人士的包容，漂流瓶便无法走到今天。愿漂流瓶仍旧能伴随越来越多的东莞市高中生走过属于他们自己的高中生活；愿我们仍旧能够在快节奏的今天停一停，为自己的朋友或未来的自己，留下一份独属于二十一世纪中叶的礼物。</p>
+                  <p className="about-closing-quote"><strong>从前的日色变得慢，车，马，邮件都慢，一生只够爱一人。</strong><br />——木心《从前慢》</p>
+                </div>}
               </div>
               <button className="underline-button about-button-stage about-stage-item" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>Read Full <Arrow /></button>
-              {expanded && <p className="expanded about-expanded">人无法两次踏入同一条河流，却能在一张泛黄的纸页里，与年少的自己阔别重逢。</p>}
             </div>
           </section>
 
@@ -758,11 +759,12 @@ export default function Home() {
             <button className="order-dialog-submit" onClick={() => setOrderQrSchool('')}>返回学校选择</button>
           </div> : <>
             <p>选择你所在的学校，我们会带你前往对应的订购页面。</p>
+            <p className="order-deadline-notice">网站线上信封订购将统一于10月24日结束，部分学校可能提前结束，请留意本校文学社通知</p>
             <span className="order-school-label" id="order-school-label">所在学校</span>
             <div className="order-school-picker">
               <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
               {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
-                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(school.qr || school.url ? '' : '该学校的订购二维码稍后开放'); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}>{school.name}<span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(school.qr || school.url ? '' : '该学校的订购二维码稍后开放'); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}><span className="order-school-option-label">{school.name}{school.name === '东莞市万江中学' && <small className="order-school-deadline">（10.10日23：59截止）</small>}</span><span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
               </div>}
             </div>
             <button className="order-dialog-submit" disabled={!selectedSchool || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购暂未开放' : '立即订购'}{selectedOrderSchool?.qr || selectedOrderSchool?.url ? <Arrow /> : null}</button>
