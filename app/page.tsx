@@ -25,7 +25,7 @@ type Club = { school: string; club: string; logo?: string; square?: boolean; fea
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
   { school: '东莞市第七高级中学', club: '秋枫文学社', logo: 'qiufeng.png' },
-  { school: '东莞市海逸外国语学校', club: '海逸文学社', featured: true },
+  { school: '东莞市海逸外国语学校', club: '海逸文学社', logo: 'haiyi.png', featured: true },
   { school: '东莞理工学校', club: '竹韵诗词社' },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
   { school: '东莞市南城开心实验学校', club: '52Herz文学社', logo: 'school-52.webp' },
@@ -61,7 +61,7 @@ const clubs: Club[] = [
   { school: '东莞市商业学校（莞城校区）', club: '玉鸣吟诵社' },
   { school: '东莞市东方明珠学校', club: '长庚文学社' },
   { school: '东莞市海德实验学校', club: '海燕文学社' },
-  { school: '东莞市弘林高级中学', club: '南亦书舍文学社', featured: true },
+  { school: '东莞市弘林高级中学', club: '南亦书舍文学社', logo: 'honglin.png', featured: true },
   { school: '东莞市松山湖莞美学校', club: '行知文学社', logo: 'xingzhi.png', featured: true },
   { school: '东莞市大岭山中学', club: '山青文学社', logo: 'shanqing.png', featured: true },
   { school: '东莞市嘉荣外国语学校', club: '嘉韵文学社', logo: 'jiayun.png', featured: true },
