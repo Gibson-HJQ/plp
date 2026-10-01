@@ -45,7 +45,7 @@ const clubs: Club[] = [
   { school: '东莞市虎门外语学校', club: '青年通讯社', logo: 'huqing.webp' },
   { school: '东莞中学', club: '云雕文学社', logo: 'yundiao.webp' },
   { school: '东莞市粤华学校', club: '流月文学社', logo: 'liuyue.webp' },
-  { school: '东莞市第二高级中学', club: '旗峰文学社', featured: true },
+  { school: '东莞市第二高级中学', club: '旗峰文学社', logo: 'qifeng.png', featured: true },
   { school: '东莞市东华松山湖高级中学', club: '辞故文学社' },
   { school: '东莞市海德双语学校', club: '拾遗文学社' },
   { school: '东莞市第五高级中学', club: '汉苑文学社' },
