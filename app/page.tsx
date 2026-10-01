@@ -103,7 +103,7 @@ const schoolCount = new Set(clubs.map((club) => club.school)).size
 type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
-  { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.png' },
+  { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
   { name: '东莞市第七高级中学', url: 'https://xtfvzrr0.jsjform.com/f/s0ZZNP', qr: '/assets/order-qr/qiufeng.png' },
@@ -112,7 +112,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },
   { name: '东莞市南城开心实验学校', url: 'https://xtfvzrr0.jsjform.com/f/Itu1jq', qr: '/assets/order-qr/52herz.png' },
   { name: '东莞市嘉荣外国语学校', url: 'https://xtfvzrr0.jsjform.com/f/H2n45A', qr: '/assets/order-qr/jiarong.png' },
-  { name: '东莞市粤华学校', url: 'https://xtfvzrr0.jsjform.com/f/ukG9pM', qr: '/assets/order-qr/liuyue.png' },
+  { name: '东莞市粤华学校', url: 'https://xtfvzrr0.jsjform.com/f/ukG9pM', qr: '/assets/order-qr/liuyue.jpg' },
   { name: '东莞市松山湖莞美学校', url: 'https://xtfvzrr0.jsjform.com/f/pRvJFy', qr: '/assets/order-qr/guanmei.png' },
   { name: '东莞市大岭山中学', url: 'https://xtfvzrr0.jsjform.com/f/TZ1mF3', qr: '/assets/order-qr/dalingshan.png' },
   { name: '东莞市北辰高级中学', url: 'https://xtfvzrr0.jsjform.com/f/y4XTkU', qr: '/assets/order-qr/beichen.png' },
