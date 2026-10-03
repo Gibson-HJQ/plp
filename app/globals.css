@@ -135,10 +135,10 @@
 .roadmap-outro{width:100vw;height:clamp(170px,19vw,290px);margin:20px 0 -100px calc(50% - 50vw);display:flex;align-items:flex-end;overflow:hidden;pointer-events:none}
 .roadmap-outro span{display:block;width:100%;padding:0 2vw;color:color-mix(in srgb,var(--fg) 5%,transparent);font-size:clamp(96px,14.5vw,230px);font-weight:800;line-height:.74;letter-spacing:0;white-space:nowrap;text-align:center}
 .contact-panel{position:relative;z-index:4;background:var(--bg);isolation:isolate;box-shadow:0 -1px 0 var(--line);transform:translate3d(0,var(--contact-panel-shift,54px),0);will-change:transform}
-.club-item{display:grid;grid-template-columns:22px 52px minmax(0,1fr);align-items:center;gap:11px;min-height:82px;padding:12px 0;border-top:1px solid var(--line)}
+.club-item{display:grid;grid-template-columns:22px 48px minmax(0,1fr);align-items:center;gap:11px;min-height:78px;padding:12px 0;border-top:1px solid var(--line)}
 .club-number{color:var(--muted);font-size:9px;letter-spacing:.16em}
-.club-emblem{display:grid;place-items:center;width:52px;height:52px;overflow:hidden;border:1px solid var(--line);border-radius:50%;background:#fff;color:#0e0e0e;font-family:Georgia,serif;font-size:18px;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease}
-.club-emblem img{display:block;width:100%;height:100%;padding:1px;object-fit:contain;filter:none}
+.club-emblem{display:grid;place-items:center;width:48px;height:48px;overflow:hidden;border:1px solid var(--line);border-radius:50%;background:#fff;color:#0e0e0e;font-family:Georgia,serif;font-size:18px;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s ease}
+.club-emblem img{display:block;width:100%;height:100%;padding:3px;object-fit:contain;filter:none}
 .club-emblem-empty{background:transparent;border-style:dashed;opacity:.38}
 /* Square-framed clubs keep the badge artwork at full bleed, matching the round emblems' white ground. */
 .club-emblem-square{position:relative;left:2px;width:44px;height:44px;border-radius:0;border-color:transparent;background:#fff}
@@ -152,7 +152,7 @@
 .club-item:hover .club-emblem{transform:scale(1.06);opacity:1}
 .club-item:hover .club-name strong{color:var(--fg)}
 
-@media(max-width:800px){.club-section{padding-top:95px;padding-bottom:120px}.club-section .focus-reveal-item{opacity:1;filter:none;animation:none;transition:none}.club-heading small{font-size:11px}.club-heading h2{font-size:clamp(40px,11vw,56px);line-height:.96}.club-heading>p{font-size:11px}.club-groups{margin-top:58px;gap:70px}.club-group-heading{align-items:flex-start}.club-group-heading h3{font-size:27px}.club-group-note{font-size:10px}.club-list{grid-template-columns:1fr;margin-top:34px}.club-item{grid-template-columns:22px 52px minmax(0,1fr);min-height:78px;gap:11px}.club-item:last-child{border-bottom:1px solid var(--line)}.club-emblem{width:52px;height:52px}.club-emblem-square{width:44px;height:44px}.club-name strong{font-size:12px}.club-item-plain{grid-template-columns:22px minmax(0,1fr);min-height:62px}.club-item-plain .club-name{grid-template-columns:1fr;gap:4px}.club-item-plain .club-name small{font-size:9px}}
+@media(max-width:800px){.club-section{padding-top:95px;padding-bottom:120px}.club-section .focus-reveal-item{opacity:1;filter:none;animation:none;transition:none}.club-heading small{font-size:11px}.club-heading h2{font-size:clamp(40px,11vw,56px);line-height:.96}.club-heading>p{font-size:11px}.club-groups{margin-top:58px;gap:70px}.club-group-heading{align-items:flex-start}.club-group-heading h3{font-size:27px}.club-group-note{font-size:10px}.club-list{grid-template-columns:1fr;margin-top:34px}.club-item{grid-template-columns:22px 48px minmax(0,1fr);min-height:74px;gap:11px}.club-item:last-child{border-bottom:1px solid var(--line)}.club-emblem{width:48px;height:48px}.club-emblem-square{width:44px;height:44px}.club-name strong{font-size:12px}.club-item-plain{grid-template-columns:22px minmax(0,1fr);min-height:62px}.club-item-plain .club-name{grid-template-columns:1fr;gap:4px}.club-item-plain .club-name small{font-size:9px}}
 @media(max-width:800px){.roadmap-outro{height:130px;margin-bottom:-130px}.roadmap-outro span{font-size:clamp(62px,15.5vw,98px)}}
 @media(prefers-reduced-motion:reduce){.hero-about .section-label,.hero-about .about-copy,.club-section .focus-reveal-item,.timeline-card.focus-reveal-item,.roadmap-heading{opacity:1;filter:none;animation:none}.contact-panel{transform:none}}
 
