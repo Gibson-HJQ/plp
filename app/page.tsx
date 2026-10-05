@@ -126,7 +126,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
   { name: '东莞市海逸外国语学校', url: '' },
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
-  { name: '东莞市第十一高级中学', url: '' },
+  { name: '东莞市第十一高级中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市第九高级中学', url: '' },
 ]
 
