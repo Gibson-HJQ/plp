@@ -72,7 +72,7 @@ const clubs: Club[] = [
   { school: '东莞市轻工业学校', club: '默文社' },
   { school: '东莞市嘉荣实验综合高级中学', club: '青嘉文学社' },
   { school: '御花苑外国语高中（凤岗天安校区）', club: '' },
-  { school: '东莞市第十一高级中学', club: '含章文学社', logo: 'hanzhang.png', featured: true },
+  { school: '东莞市第十一中学', club: '含章文学社', logo: 'hanzhang.png', featured: true },
   { school: '东莞市第九高级中学', club: '鹤鸣文学社', logo: 'heming.png', featured: true },
 ]
 
@@ -95,7 +95,7 @@ const siteClubOrder = [
   '东莞市弘林高级中学',
   '东莞市海逸外国语学校',
   '东莞市第二高级中学',
-  '东莞市第十一高级中学',
+  '东莞市第十一中学',
   '东莞市第九高级中学',
 ]
 const siteClubOrderIndex = new Map(siteClubOrder.map((school, index) => [school, index]))
@@ -126,7 +126,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
   { name: '东莞市海逸外国语学校', url: '' },
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
-  { name: '东莞市第十一高级中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
+  { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市第九高级中学', url: '' },
 ]
 
