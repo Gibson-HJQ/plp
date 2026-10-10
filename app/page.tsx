@@ -78,6 +78,7 @@ const clubs: Club[] = [
 ]
 
 const siteClubOrder = [
+  '东莞湾区中学',
   '东莞中学',
   '东莞高级中学',
   '东莞市第六高级中学',
@@ -98,7 +99,6 @@ const siteClubOrder = [
   '东莞市第二高级中学',
   '东莞市第十一中学',
   '东莞市第九高级中学',
-  '东莞湾区中学',
 ]
 const siteClubOrderIndex = new Map(siteClubOrder.map((school, index) => [school, index]))
 const siteClubs = clubs
@@ -110,6 +110,7 @@ const schoolCount = new Set(clubs.map((club) => club.school)).size
 type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
+  { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
@@ -130,7 +131,6 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
   { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市第九高级中学', url: '' },
-  { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
 ]
 
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
