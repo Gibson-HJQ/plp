@@ -74,6 +74,7 @@ const clubs: Club[] = [
   { school: '御花苑外国语高中（凤岗天安校区）', club: '' },
   { school: '东莞市第十一中学', club: '含章文学社', logo: 'hanzhang.png', featured: true },
   { school: '东莞市第九高级中学', club: '鹤鸣文学社', logo: 'heming.png', featured: true },
+  { school: '东莞湾区中学', club: '', logo: 'dongguan-bay-area.png', featured: true },
 ]
 
 const siteClubOrder = [
@@ -97,6 +98,7 @@ const siteClubOrder = [
   '东莞市第二高级中学',
   '东莞市第十一中学',
   '东莞市第九高级中学',
+  '东莞湾区中学',
 ]
 const siteClubOrderIndex = new Map(siteClubOrder.map((school, index) => [school, index]))
 const siteClubs = clubs
@@ -128,6 +130,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
   { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市第九高级中学', url: '' },
+  { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
 ]
 
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
