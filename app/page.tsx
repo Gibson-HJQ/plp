@@ -736,7 +736,7 @@ export default function Home() {
             <ul className="club-list club-list-featured">
               {siteClubs.map((club, index) => <li className="club-item" key={`${club.school}-${club.club}`}>
                 <span className="club-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className={`club-emblem${club.square ? ' club-emblem-square' : ''}${club.logo ? '' : ' club-emblem-empty'}`}>{club.logo && <img src={`/assets/hero-emblems/${club.logo}`} alt="" />}</span>
+                <span className={`club-emblem${club.square ? ' club-emblem-square' : ''}${club.school === '东莞市众美中学' ? ' club-emblem-yinping' : ''}${club.logo ? '' : ' club-emblem-empty'}`}>{club.logo && <img src={`/assets/hero-emblems/${club.logo}`} alt="" />}</span>
                 <span className="club-name"><strong>{club.school}</strong>{club.club && <small>{club.club}</small>}</span>
               </li>)}
             </ul>
