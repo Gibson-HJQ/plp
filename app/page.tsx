@@ -3,23 +3,6 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { gallerySchools } from './gallery/gallery-data'
 
-const heroColumns = [
-  [
-    { file: 'jiangfeng.png', name: '江风文学社社徽' },
-    { file: 'yundiao.webp', name: '云雕文学社社徽' },
-    { file: 'xingzhixiang.webp', name: '星之巷文学社社徽' },
-    { file: 'huqing.webp', name: '虎青新闻社社徽' },
-  ],
-  [
-    { file: 'qiufeng.png', name: '秋枫文学社社徽' },
-    { file: 'school-52.webp', name: '52赫兹文学社社徽' },
-    { file: 'hanxiang.webp', name: '翰香文学社社徽' },
-    { file: 'liuyue.webp', name: '流月文学社社徽' },
-    { file: 'mubo.webp', name: '沐博文学社社徽' },
-    { file: 'qingcaodi.webp', name: '青草地文学社社徽' },
-  ],
-]
-
 type Club = { school: string; club: string; logo?: string; square?: boolean; featured?: boolean }
 
 const clubs: Club[] = [
@@ -104,6 +87,12 @@ const siteClubOrderIndex = new Map(siteClubOrder.map((school, index) => [school,
 const siteClubs = clubs
   .filter((club) => club.logo || club.featured)
   .sort((a, b) => (siteClubOrderIndex.get(a.school) ?? siteClubOrder.length) - (siteClubOrderIndex.get(b.school) ?? siteClubOrder.length))
+const heroColumns = [siteClubs.slice(0, 10), siteClubs.slice(10)].map((schools) =>
+  schools.map((club) => ({
+    file: club.logo!,
+    name: club.club ? `${club.club}社徽` : `${club.school}标志`,
+  })),
+)
 const activityOnlyClubs = clubs.filter((club) => !club.logo && !club.featured)
 const schoolCount = new Set(clubs.map((club) => club.school)).size
 
