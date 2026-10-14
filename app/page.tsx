@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { gallerySchools } from './gallery/gallery-data'
 
-type Club = { school: string; club: string; logo?: string; square?: boolean; featured?: boolean }
+type Club = { school: string; club: string; logo?: string; heroLogo?: string; square?: boolean; featured?: boolean }
 
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
@@ -58,7 +58,7 @@ const clubs: Club[] = [
   { school: '东莞市第九高级中学', club: '鹤鸣文学社', logo: 'heming.png', featured: true },
   { school: '东莞湾区中学', club: '', logo: 'dongguan-bay-area.png', featured: true },
   { school: '东莞市塘厦中学', club: '绿叶文学社' },
-  { school: '东莞水乡未来学校', club: '昭泮文学社' },
+  { school: '东莞市水乡未来学校', club: '昭泮文学社', logo: 'zhaopan-round.png', heroLogo: 'zhaopan-full.jpg', featured: true },
   { school: '东莞市众美中学', club: '银屏山文学社', logo: 'yinping.png', featured: true },
   { school: '东莞市新世纪英才学校', club: '学生会' },
   { school: '东莞市第十高级中学', club: '翼航文学社' },
@@ -71,6 +71,7 @@ const clubs: Club[] = [
 
 const siteClubOrder = [
   '东莞湾区中学',
+  '东莞市水乡未来学校',
   '东莞中学',
   '东莞高级中学',
   '东莞市第六高级中学',
@@ -100,7 +101,7 @@ const siteClubs = clubs
 const heroColumnSplit = Math.floor(siteClubs.length / 2)
 const heroColumns = [siteClubs.slice(0, heroColumnSplit), siteClubs.slice(heroColumnSplit)].map((schools) =>
   schools.map((club) => ({
-    file: club.logo!,
+    file: club.heroLogo ?? club.logo!,
     name: club.club ? `${club.club}社徽` : `${club.school}标志`,
   })),
 )
@@ -111,6 +112,7 @@ type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
   { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
+  { name: '东莞市水乡未来学校', url: '', qr: '/assets/order-qr/zhaopan.png' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
