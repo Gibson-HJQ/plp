@@ -118,7 +118,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
   { name: '东莞市第六高级中学', url: '' },
-  { name: '东莞市第七高级中学', url: 'https://xtfvzrr0.jsjform.com/f/s0ZZNP', qr: '/assets/order-qr/qiufeng.png' },
+  { name: '东莞市第七高级中学', url: 'https://xtfvzrr0.jsjform.com/f/s0ZZNP', qr: '/assets/order-qr/qiufeng.jpg' },
   { name: '东莞市万江中学', url: '' },
   { name: '东莞市长安中学', url: '' },
   { name: '东莞市虎门外语学校', url: 'https://xtfvzrr0.jsjform.com/f/icpD1B', qr: '/assets/order-qr/humen.png' },
