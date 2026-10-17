@@ -9,7 +9,7 @@ const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
   { school: '东莞市第七高级中学', club: '秋枫文学社', logo: 'qiufeng.png' },
   { school: '东莞市海逸外国语学校', club: '海逸文学社', logo: 'haiyi.png', featured: true },
-  { school: '东莞理工学校', club: '竹韵诗词社' },
+  { school: '东莞理工学校', club: '竹韵文学社', logo: 'zhuyun.png', featured: true },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
   { school: '东莞市南城开心实验学校', club: '52Herz文学社', logo: 'school-52.webp' },
   { school: '东莞市厚街中学', club: '沙砾文学社' },
@@ -93,6 +93,7 @@ const siteClubOrder = [
   '东莞市第十一中学',
   '东莞市众美中学',
   '东莞市第九高级中学',
+  '东莞理工学校',
 ]
 const siteClubOrderIndex = new Map(siteClubOrder.map((school, index) => [school, index]))
 const siteClubs = clubs
@@ -134,6 +135,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市众美中学', url: '', qr: '/assets/order-qr/yinping.jpg' },
   { name: '东莞市第九高级中学', url: '' },
+  { name: '东莞理工学校', url: '', qr: '/assets/order-qr/zhuyun.jpg' },
 ]
 
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
