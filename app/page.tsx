@@ -114,9 +114,10 @@ type OrderSchool = { name: string; url: string; qr?: string }
 const orderSchools: OrderSchool[] = [
   { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
   { name: '东莞市水乡未来学校', url: '', qr: '/assets/order-qr/zhaopan.jpg' },
+  { name: '东莞理工学校', url: '', qr: '/assets/order-qr/zhuyun.jpg' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.png' },
-  { name: '东莞市第六高级中学', url: 'https://xtfvzrr0.jsjform.com/f/S4ggaG', qr: '/assets/order-qr/hanxiang.png' },
+  { name: '东莞市第六高级中学', url: '' },
   { name: '东莞市第七高级中学', url: 'https://xtfvzrr0.jsjform.com/f/s0ZZNP', qr: '/assets/order-qr/qiufeng.png' },
   { name: '东莞市万江中学', url: '' },
   { name: '东莞市长安中学', url: '' },
@@ -130,12 +131,11 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市济川中学', url: 'https://xtfvzrr0.jsjform.com/f/YPagjR', qr: '/assets/order-qr/jichuan.png' },
   { name: '东莞市商业学校（东城校区）', url: '', qr: '/assets/order-qr/commercial-dongcheng.jpg' },
   { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
-  { name: '东莞市海逸外国语学校', url: '' },
+  { name: '东莞市海逸外国语学校', url: '', qr: '/assets/order-qr/haiyi.jpg' },
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
   { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市众美中学', url: '', qr: '/assets/order-qr/yinping.jpg' },
   { name: '东莞市第九高级中学', url: '' },
-  { name: '东莞理工学校', url: '', qr: '/assets/order-qr/zhuyun.jpg' },
 ]
 
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
@@ -803,10 +803,10 @@ export default function Home() {
             <div className="order-school-picker">
               <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
               {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
-                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(school.name === '东莞市万江中学' ? '线上订购已截止' : school.name === '东莞市长安中学' ? '经社团成员讨论，暂时关闭线上订购链接。' : (school.qr || school.url) ? '' : '该学校的订购链接暂不开放'); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}><span className="order-school-option-label">{school.name}{school.name === '东莞中学' && <small className="order-school-deadline">（10月24日截止）</small>}{school.name === '东莞市万江中学' && <small className="order-school-deadline">（线上订购已截止）</small>}{school.name === '东莞市第六高级中学' && <small className="order-school-deadline">（10月12日截止）</small>}{(school.name === '东莞市松山湖莞美学校' || school.name === '东莞市粤华学校' || school.name === '东莞市南城开心实验学校' || school.name === '东莞湾区中学') && <small className="order-school-deadline">（10月18日截止）</small>}</span><span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(school.name === '东莞市万江中学' || school.name === '东莞市第六高级中学' ? '线上订购已截止' : school.name === '东莞市长安中学' ? '经社团成员讨论，暂时关闭线上订购链接。' : (school.qr || school.url) ? '' : '该学校的订购链接暂不开放'); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}><span className="order-school-option-label">{school.name}{school.name === '东莞中学' && <small className="order-school-deadline">（10月24日截止）</small>}{(school.name === '东莞市万江中学' || school.name === '东莞市第六高级中学') && <small className="order-school-deadline">（线上订购已截止）</small>}{school.name === '东莞市海逸外国语学校' && <small className="order-school-deadline">（10月17日14点开售）</small>}{school.name === '东莞市第二高级中学' && <small className="order-school-deadline">（10月18日截止）</small>}{(school.name === '东莞市松山湖莞美学校' || school.name === '东莞市粤华学校' || school.name === '东莞市南城开心实验学校' || school.name === '东莞湾区中学') && <small className="order-school-deadline">（10月18日截止）</small>}</span><span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
               </div>}
             </div>
-            <button className="order-dialog-submit" disabled={!selectedSchool || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{selectedSchool === '东莞市万江中学' ? '线上订购已截止' : selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购链接暂不开放' : '立即订购'}{selectedOrderSchool?.qr || selectedOrderSchool?.url ? <Arrow /> : null}</button>
+            <button className="order-dialog-submit" disabled={!selectedSchool || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{selectedSchool === '东莞市万江中学' || selectedSchool === '东莞市第六高级中学' ? '线上订购已截止' : selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购链接暂不开放' : '立即订购'}{selectedOrderSchool?.qr || selectedOrderSchool?.url ? <Arrow /> : null}</button>
             <p className="order-dialog-notice" role="status">{orderNotice}</p>
           </>}
         </section>
