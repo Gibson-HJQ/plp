@@ -128,7 +128,7 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市松山湖莞美学校', url: 'https://xtfvzrr0.jsjform.com/f/pRvJFy', qr: '/assets/order-qr/guanmei.png' },
   { name: '东莞市大岭山中学', url: 'https://xtfvzrr0.jsjform.com/f/TZ1mF3', qr: '/assets/order-qr/dalingshan.png' },
   { name: '东莞市北辰高级中学', url: 'https://xtfvzrr0.jsjform.com/f/y4XTkU', qr: '/assets/order-qr/beichen.png' },
-  { name: '东莞市济川中学', url: 'https://xtfvzrr0.jsjform.com/f/YPagjR', qr: '/assets/order-qr/jichuan.png' },
+  { name: '东莞市济川中学', url: 'https://xtfvzrr0.jsjform.com/f/YPagjR', qr: '/assets/order-qr/jichuan.jpg' },
   { name: '东莞市商业学校（东城校区）', url: '', qr: '/assets/order-qr/commercial-dongcheng.jpg' },
   { name: '东莞市弘林高级中学', url: 'https://xtfvzrr0.jsjform.com/f/L0136G', qr: '/assets/order-qr/honglin.png' },
   { name: '东莞市海逸外国语学校', url: '', qr: '/assets/order-qr/haiyi.jpg' },
