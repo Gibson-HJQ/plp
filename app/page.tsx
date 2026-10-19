@@ -8,7 +8,7 @@ type Club = { school: string; club: string; logo?: string; heroLogo?: string; sq
 const clubs: Club[] = [
   { school: '东莞市万江中学', club: '江风文学社', logo: 'jiangfeng.png' },
   { school: '东莞市第七高级中学', club: '秋枫文学社', logo: 'qiufeng.png' },
-  { school: '东莞市中坚实验学校', club: '', logo: 'zhongjian.png', featured: true },
+  { school: '东莞市中坚实验学校（高中部）', club: '求真文学社', logo: 'zhongjian.png', featured: true },
   { school: '东莞市海逸外国语学校', club: '海逸文学社', logo: 'haiyi.png', featured: true },
   { school: '东莞理工学校', club: '竹韵文学社', logo: 'zhuyun.png', featured: true },
   { school: '东莞市石龙中学', club: '乳雁文学社' },
@@ -68,12 +68,15 @@ const clubs: Club[] = [
   { school: '东莞市誉华职业技术学校', club: '山海文学社' },
   { school: '东莞技师学院（横沥校区）', club: '墨痕文学社' },
   { school: '东莞市丰泰外国语实验高级中学', club: '立声文学社' },
+  { school: '东莞市纺织服装学校', club: '学生会' },
+  { school: '东莞市麻涌中学', club: '新东湖文学社' },
+  { school: '东莞市礼仁外国语学校', club: '青葵文学社' },
 ]
 
 const siteClubOrder = [
   '东莞湾区中学',
   '东莞市水乡未来学校',
-  '东莞市中坚实验学校',
+  '东莞市中坚实验学校（高中部）',
   '东莞中学',
   '东莞高级中学',
   '东莞市第六高级中学',
@@ -116,7 +119,7 @@ type OrderSchool = { name: string; url: string; qr?: string }
 const orderSchools: OrderSchool[] = [
   { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
   { name: '东莞市水乡未来学校', url: '', qr: '/assets/order-qr/zhaopan.jpg' },
-  { name: '东莞市中坚实验学校', url: '', qr: '/assets/order-qr/zhongjian.jpg' },
+  { name: '东莞市中坚实验学校（高中部）', url: '', qr: '/assets/order-qr/zhongjian.jpg' },
   { name: '东莞理工学校', url: '', qr: '/assets/order-qr/zhuyun.jpg' },
   { name: '东莞中学', url: 'https://xtfvzrr0.jsjform.com/f/ZmoVtk', qr: '/assets/order-qr/yundiao.jpg' },
   { name: '东莞高级中学', url: 'https://xtfvzrr0.jsjform.com/f/A0WyO7', qr: '/assets/order-qr/qingcaodi.jpg' },
