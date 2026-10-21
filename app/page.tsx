@@ -154,10 +154,7 @@ const closedOrderSchools = new Set([
   '东莞市第十一中学',
   '东莞市第二高级中学',
 ])
-const temporarilyUnavailableOrderNotices = new Map([
-  ['东莞市商业学校（东城校区）', '暂不开放，正在调整商品'],
-])
-
+const temporarilyUnavailableOrderNotices = new Map<string, string>()
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
 
 const projects: Project[] = [
