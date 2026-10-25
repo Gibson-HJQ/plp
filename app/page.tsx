@@ -141,7 +141,6 @@ const orderSchools: OrderSchool[] = [
   { name: '东莞市第二高级中学', url: '', qr: '/assets/order-qr/second-high-flagpeak.jpg' },
   { name: '东莞市第十一中学', url: '', qr: '/assets/order-qr/hanzhang.jpg' },
   { name: '东莞市众美中学', url: '', qr: '/assets/order-qr/yinping.jpg' },
-  { name: '东莞市第九高级中学', url: '' },
 ]
 
 const openOrderSchools = new Set(['东莞市中坚实验学校（高中部）', '东莞市商业学校（东城校区）'])
