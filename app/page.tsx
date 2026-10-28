@@ -68,12 +68,13 @@ const clubs: Club[] = [
   { school: '东莞市誉华职业技术学校', club: '山海文学社' },
   { school: '东莞技师学院（横沥校区）', club: '墨痕文学社' },
   { school: '东莞市丰泰外国语实验高级中学', club: '立声文学社' },
-  { school: '东莞市纺织服装学校', club: '学生会' },
+  { school: '东莞市纺织服装学校', club: '学生会', logo: 'textile-fashion.png', featured: true },
   { school: '东莞市麻涌中学', club: '新东湖文学社' },
   { school: '东莞市礼仁外国语学校', club: '青葵文学社' },
 ]
 
 const siteClubOrder = [
+  '东莞市纺织服装学校',
   '东莞湾区中学',
   '东莞市水乡未来学校',
   '东莞市中坚实验学校（高中部）',
@@ -117,6 +118,7 @@ const schoolCount = new Set(clubs.map((club) => club.school)).size
 type OrderSchool = { name: string; url: string; qr?: string }
 
 const orderSchools: OrderSchool[] = [
+  { name: '东莞市纺织服装学校', url: '' },
   { name: '东莞市中坚实验学校（高中部）', url: '', qr: '/assets/order-qr/zhongjian.jpg' },
   { name: '东莞市商业学校（东城校区）', url: '', qr: '/assets/order-qr/commercial-dongcheng.jpg' },
   { name: '东莞湾区中学', url: '', qr: '/assets/order-qr/dongguan-bay-area.jpg' },
@@ -144,8 +146,10 @@ const orderSchools: OrderSchool[] = [
 ]
 
 const openOrderSchools = new Set(['东莞市中坚实验学校（高中部）', '东莞市商业学校（东城校区）'])
-const closedOrderSchools = new Set(orderSchools.filter((school) => !openOrderSchools.has(school.name)).map((school) => school.name))
-const temporarilyUnavailableOrderNotices = new Map<string, string>()
+const temporarilyUnavailableOrderNotices = new Map<string, string>([
+  ['东莞市纺织服装学校', '订购链接暂不开放'],
+])
+const closedOrderSchools = new Set(orderSchools.filter((school) => !openOrderSchools.has(school.name) && !temporarilyUnavailableOrderNotices.has(school.name)).map((school) => school.name))
 type Project = { type: string; year: string; title: string; image: string; cardClass?: string; gallery?: string }
 
 const projects: Project[] = [
@@ -820,10 +824,10 @@ export default function Home() {
             <div className="order-school-picker">
               <button className="order-school-trigger" id="order-school-trigger" aria-labelledby="order-school-label order-school-trigger" aria-haspopup="listbox" aria-expanded={schoolMenuOpen} onClick={() => setSchoolMenuOpen(!schoolMenuOpen)} autoFocus><span>{selectedSchool || '请选择学校'}</span><b aria-hidden="true">⌄</b></button>
               {schoolMenuOpen && <div className="order-school-menu" role="listbox" aria-labelledby="order-school-label">
-                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(closedOrderSchools.has(school.name) ? '线上订购已截止' : temporarilyUnavailableOrderNotices.get(school.name) ?? (school.name === '东莞市长安中学' ? '经社团成员讨论，暂时关闭线上订购链接。' : (school.qr || school.url) ? '' : '该学校的订购链接暂不开放')); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}><span className="order-school-option-label">{school.name}{closedOrderSchools.has(school.name) && <small className="order-school-deadline">（线上订购已截止）</small>}{temporarilyUnavailableOrderNotices.has(school.name) && <small className="order-school-deadline">（暂不开放，正在调整商品）</small>}{openOrderSchools.has(school.name) && <small className="order-school-deadline">（10月31日截止）</small>}</span><span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
+                {orderSchools.map((school) => <button className={selectedSchool === school.name ? 'selected' : ''} role="option" aria-selected={selectedSchool === school.name} onClick={() => { setSelectedSchool(school.name); setOrderNotice(closedOrderSchools.has(school.name) ? '线上订购已截止' : temporarilyUnavailableOrderNotices.get(school.name) ?? (school.name === '东莞市长安中学' ? '经社团成员讨论，暂时关闭线上订购链接。' : (school.qr || school.url) ? '' : '该学校的订购链接暂不开放')); setOrderQrSchool(''); setSchoolMenuOpen(false) }} key={school.name}><span className="order-school-option-label">{school.name}{closedOrderSchools.has(school.name) && <small className="order-school-deadline">（线上订购已截止）</small>}{temporarilyUnavailableOrderNotices.has(school.name) && <small className="order-school-deadline">（{temporarilyUnavailableOrderNotices.get(school.name)}）</small>}{openOrderSchools.has(school.name) && <small className="order-school-deadline">（10月31日截止）</small>}</span><span aria-hidden="true">{selectedSchool === school.name ? '✓' : ''}</span></button>)}
               </div>}
             </div>
-            <button className="order-dialog-submit" disabled={!selectedSchool || closedOrderSchools.has(selectedSchool) || temporarilyUnavailableOrderNotices.has(selectedSchool) || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{closedOrderSchools.has(selectedSchool) ? '线上订购已截止' : temporarilyUnavailableOrderNotices.has(selectedSchool) ? '暂不开放，正在调整商品' : selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购链接暂不开放' : '立即订购'}{!closedOrderSchools.has(selectedSchool) && !temporarilyUnavailableOrderNotices.has(selectedSchool) && (selectedOrderSchool?.qr || selectedOrderSchool?.url) ? <Arrow /> : null}</button>
+            <button className="order-dialog-submit" disabled={!selectedSchool || closedOrderSchools.has(selectedSchool) || temporarilyUnavailableOrderNotices.has(selectedSchool) || Boolean(selectedOrderSchool && !selectedOrderSchool.qr && !selectedOrderSchool.url)} onClick={submitOrder}>{closedOrderSchools.has(selectedSchool) ? '线上订购已截止' : temporarilyUnavailableOrderNotices.get(selectedSchool) ?? (selectedOrderSchool?.qr ? '显示订购二维码' : selectedOrderSchool?.url ? '立即订购' : selectedOrderSchool ? '订购链接暂不开放' : '立即订购')}{!closedOrderSchools.has(selectedSchool) && !temporarilyUnavailableOrderNotices.has(selectedSchool) && (selectedOrderSchool?.qr || selectedOrderSchool?.url) ? <Arrow /> : null}</button>
             <p className="order-dialog-notice" role="status">{orderNotice}</p>
           </>}
         </section>
